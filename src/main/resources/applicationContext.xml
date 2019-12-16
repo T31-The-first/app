@@ -4,4 +4,22 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
         <context:component-scan base-package="com.t31.app"/>
+        <context:property-placeholder location="classpath*:jdbc.properties"/>
+        <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" name="dataSource">
+                <property name="user" value="${user}"/>
+                <property name="password" value="${password}"/>
+                <property name="jdbcUrl" value="${url}"/>
+                <property name="driverClass" value="${driver}"/>
+                <property name="minPoolSize" value="5"/>
+                <property name="maxPoolSize" value="20"/>
+                <property name="initialPoolSize" value="10"/>
+        </bean>
+        <bean class="org.mybatis.spring.SqlSessionFactoryBean" name="sqlSessionFactory">
+                <property name="dataSource" ref="dataSource"/>
+                <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"/>
+        </bean>
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" name="scannerConfigurer">
+                <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+                <property name="basePackage" value="com.t31.app.dao"/>
+        </bean>
 </beans>
