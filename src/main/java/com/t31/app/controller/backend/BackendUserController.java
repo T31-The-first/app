@@ -7,10 +7,5 @@ public class BackendUserController {
         public String backendLogin(){
             return "backendlogin";
         }
-
-
-        public void test(){
-            
-        }
 }
 
