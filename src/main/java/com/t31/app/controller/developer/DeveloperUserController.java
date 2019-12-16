@@ -7,11 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/developer")
 public class DeveloperUserController {
         @RequestMapping("/devlogin.html")
-        public String devLogin(){
+        public String devLoginBefore(){
             return "devlogin";
         }
         @RequestMapping("/index.html")
         public String index(){
             return "developer/main";
+        }
+        @RequestMapping("/dologin")
+        public String doLogin(String devCode,String devPassword){
+            //登录提交地址
+
+            return "";
         }
 }
