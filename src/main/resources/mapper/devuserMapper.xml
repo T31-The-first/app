@@ -14,4 +14,19 @@
               AND
                 devPassword=#{devPassword}
         </select>
+        <select id="selectAppInfo" resultType="com.t31.app.entity.devinfo.AppInfoList">
+              select
+                    T1.softwareName,
+                    T1.APKName,
+                    T1.softwareSize,
+                    T1.supportROM,
+                    (SELECT categoryName FROM app_category WHERE app_category.id=T1.categoryLevel1) AS categoryLevel1Name,
+                    (SELECT categoryName FROM app_category WHERE app_category.id=T1.categoryLevel2) AS categoryLevel2Name,
+                    (SELECT categoryName FROM app_category WHERE app_category.id=T1.categoryLevel3) AS categoryLevel3Name,
+                    (SELECT valueName FROM data_dictionary WHERE typeCode = 'APP_STATUS' AND valueId=T1.status) AS statusName,
+                    T1.downloads,
+                    (SELECT versionNo FROM app_version WHERE app_version.id=T1.versionId) AS versionNo
+              from
+                    app_info AS T1
+        </select>
 </mapper>
