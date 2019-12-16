@@ -8,6 +8,15 @@ public class AppInfoList extends AppInfoDTO {
         private String categoryLevel3Name;
         private String statusName;
         private String versionNo;
+        private String flatformName;
+
+    public String getFlatformName() {
+        return flatformName;
+    }
+
+    public void setFlatformName(String flatformName) {
+        this.flatformName = flatformName;
+    }
 
     public String getCategoryLevel1Name() {
         return categoryLevel1Name;
