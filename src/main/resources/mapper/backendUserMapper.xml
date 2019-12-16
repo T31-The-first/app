@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace指用户自定义的命名空间 -->
+<mapper namespace="com.t31.appinfo.dao.backend.BackendUserDao">
+    <select id="doLogin" resultType="backendUser" parameterType="string">
+        SELECT * FROM backend_user
+        where userCode=#{param1} and userPassword=#{param2}
+    </select>
+</mapper>
