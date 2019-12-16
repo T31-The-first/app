@@ -16,7 +16,7 @@ public class DeveloperUserController {
         }
         @RequestMapping("/dologin")
         public String doLogin(String devCode,String devPassword){
-            //登录提交地址
+            //开发者登录提交地址
 
             return "";
         }

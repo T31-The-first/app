@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace指用户自定义的命名空间 -->
-<mapper namespace="com.t31.appinfo.dao.backend.BackendUserDao">
-    <select id="doLogin" resultType="backendUser" parameterType="string">
+<mapper namespace="com.t31.app.dao.backend.BackendUserDao">
+    <select id="doLogin" resultType="com.t31.app.entity.BackendUserDTO" parameterType="string">
         SELECT * FROM backend_user
         where userCode=#{param1} and userPassword=#{param2}
     </select>
