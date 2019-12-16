@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace指用户自定义的命名空间 -->
+<mapper namespace="com.t31.app.dao.developer.DevUserDAO">
+        <select id="userLogin" resultType="com.t31.app.entity.DevUserDTO">
+              SELECT
+                *
+              from
+                dev_user
+              WHERE
+                devCode=#{devCode}
+              AND
+                devPassword=#{devPassword}
+        </select>
+</mapper>
