@@ -41,7 +41,7 @@
 
             <div class="clearfix"></div>
 
-            <!-- menu profile quick info -->
+            <!-- menu profile quick backend -->
             <div class="profile">
               <div class="profile_pic">
                 <img src="${pageContext.request.contextPath }/statics/images/img.jpg" alt="..." class="img-circle profile_img">
@@ -51,7 +51,7 @@
                 <h2>${userSession.userCode }</h2>
               </div>
             </div>
-            <!-- /menu profile quick info -->
+            <!-- /menu profile quick backend -->
 
             <br />
 

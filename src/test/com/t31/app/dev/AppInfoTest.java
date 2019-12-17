@@ -24,7 +24,7 @@ public class AppInfoTest {
         @Test
         public void selectAppInfoTest(){
 //            Page page = new Page();
-//            for(AppInfoList app:(List<AppInfoList>)appInfoService.selectAppInfo(new AppInfoDTO(),page).getDataList()) {
+//            for(AppInfoList2 app:(List<AppInfoList2>)appInfoService.selectAppInfo(new AppInfoDTO(),page).getDataList()) {
 //                System.out.println(app.getCategoryLevel1Name());
 //            }
         }

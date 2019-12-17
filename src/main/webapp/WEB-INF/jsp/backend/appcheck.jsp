@@ -6,7 +6,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>查看并审核APP信息 <i class="fa fa-user"></i>${userSession.userName}</small></h2>
+        <h2>查看并审核APP信息 <i class="fa fa-user"></i><small>${userSession.userName}</small></h2>
              <div class="clearfix"></div>
       </div>
       <div class="x_title">
@@ -14,13 +14,13 @@
           <div class="clearfix"></div>
       </div>
       <div class="x_content1">
-        <form class="form-horizontal form-label-left" action="checksave" method="post">
+        <form class="form-horizontal form-label-left" action="/appinfo/checkdo" method="post">
           <input type="hidden" name="id" value="${appInfo.id}">
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">软件名称 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input class="form-control col-md-7 col-xs-12" value="${appInfo.softwareName}" 
+              <input class="form-control col-md-7 col-xs-12" value="${appInfo.softwareName}"
               type="text" readonly="readonly">
             </div>
           </div>
@@ -103,7 +103,7 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
 			 <c:choose> 
-				  <c:when test="${appInfo.logoPicPath == null || appInfo.logoPicPath == ''}">   
+				  <c:when test="${appInfo.logoPicPath== null || appInfo.logoPicPath == ''}">
 				    	暂无
 				  </c:when> 
 				  <c:otherwise>   
@@ -137,7 +137,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">版本号 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input class="form-control col-md-7 col-xs-12" value="${appVersion.versionNo }" 
+              <input class="form-control col-md-7 col-xs-12" value="${appVersion.versionNo }"
               type="text" readonly="readonly" >
             </div>
           </div>
