@@ -11,8 +11,14 @@ import java.util.List;
 public class DataDictionaryServiceImpl implements DataDictionaryService {
     @Autowired
     private DataDictionaryDAO dataDictionaryDAO;
+    private final String statusCode="APP_STATUS";
+    private final String flatFormCode = "APP_FLATFORM";
     @Override
     public List<DataDictionaryDTO> selectStatusList() {
-        return dataDictionaryDAO.selectAppStatusList();
+        return dataDictionaryDAO.selectDictionaryList(statusCode);
+    }
+
+    public List<DataDictionaryDTO> selectFlatFormList(){
+        return dataDictionaryDAO.selectDictionaryList(flatFormCode);
     }
 }

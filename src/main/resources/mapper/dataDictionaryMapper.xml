@@ -4,12 +4,13 @@
 
 <!-- namespace指用户自定义的命名空间 -->
 <mapper namespace="com.t31.app.dao.developer.DataDictionaryDAO">
-        <select id="selectAppStatusList" resultType="com.t31.app.entity.DataDictionaryDTO">
+        <select id="selectDictionaryList" resultType="com.t31.app.entity.DataDictionaryDTO" parameterType="string">
             SELECT
                 valueName,valueId
             FROM
                 data_dictionary
             WHERE
-                typeCode='APP_STATUS'
+                typeCode=#{dictionaryCode}
         </select>
+
 </mapper>

@@ -5,5 +5,6 @@ import com.t31.app.entity.DataDictionaryDTO;
 import java.util.List;
 
 public interface DataDictionaryDAO {
-        public List<DataDictionaryDTO> selectAppStatusList();
+        //查询状态列表
+        public List<DataDictionaryDTO> selectDictionaryList(String dictionaryCode);
 }

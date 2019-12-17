@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -37,13 +38,32 @@ public class AppInfoController {
             //加载一级菜单
             List<AppCategoryDTO> categoryList = appCategoryService.selectcategoryLevelList();
             List<DataDictionaryDTO> statusData = dataDictionaryService.selectStatusList();
+            List<DataDictionaryDTO> flatFormData = dataDictionaryService.selectFlatFormList();
+            //渲染状态列表
             model.addAttribute("statusList",statusData);
+            //平台列表
+            model.addAttribute("flatFormList",flatFormData);
+            //页数据
             model.addAttribute("appListPage",page);
+            //条件数据
+            model.addAttribute("appinfo",appinfo);
+            //一级菜单
             model.addAttribute("categoryLevel1List",categoryList);
+            //二级菜单
+            if(appinfo.getCategoryLevel1()>0){
+                model.addAttribute("categoryLevel2List",appCategoryService.selectcategoryLevelList(appinfo.getCategoryLevel1()));
+            }
+            //三级菜单
+            if(appinfo.getCategoryLevel2()>0){
+                model.addAttribute("categoryLevel3List",appCategoryService.selectcategoryLevelList(appinfo.getCategoryLevel2()));
+            }
+
             return "developer/appinfolist";
         }
         @RequestMapping("/appcategory")
-        public String appCategoryList(){
-            return null;
+        @ResponseBody
+        public List<AppCategoryDTO> appCategoryList(int pid){
+
+            return appCategoryService.selectcategoryLevelList(pid);
         }
 }
