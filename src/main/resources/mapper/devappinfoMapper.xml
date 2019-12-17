@@ -38,6 +38,7 @@
                     AND categoryLevel3 =#{appinfo.categoryLevel3}
                 </if>
             </where>
+            limit #{start},#{size}
         </select>
         <select id="selectAppCount" resultType="int" parameterType="com.t31.app.entity.AppInfoDTO">
             select

@@ -1,5 +1,6 @@
 package com.t31.app.dev;
 
+import com.t31.app.entity.AppInfoDTO;
 import com.t31.app.entity.devinfo.AppInfoList;
 import com.t31.app.service.developer.DevAppInfoService;
 import com.t31.app.util.Page;
@@ -18,9 +19,9 @@ public class AppInfoTest {
         private DevAppInfoService appInfoService;
         @Test
         public void selectAppInfoTest(){
-            Page page = new Page();
-            for(AppInfoList app:(List<AppInfoList>)appInfoService.selectAppInfo(null,page).getDataList()) {
-                System.out.println(app.getCategoryLevel1Name());
-            }
+//            Page page = new Page();
+//            for(AppInfoList app:(List<AppInfoList>)appInfoService.selectAppInfo(new AppInfoDTO(),page).getDataList()) {
+//                System.out.println(app.getCategoryLevel1Name());
+//            }
         }
 }
