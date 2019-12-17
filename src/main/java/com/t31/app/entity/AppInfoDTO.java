@@ -23,7 +23,7 @@ public class AppInfoDTO {
         private int modifyBy;
         private int categoryLevel1;
         private int categoryLevel2;
-        private String logoPocPath;
+        private String logoPicPath;
         private String logoLocPath;
         private int versionId;
 
@@ -50,7 +50,7 @@ public class AppInfoDTO {
                 ", modifyBy=" + modifyBy +
                 ", categoryLevel1=" + categoryLevel1 +
                 ", categoryLevel2=" + categoryLevel2 +
-                ", logoPocPath='" + logoPocPath + '\'' +
+                ", logoPocPath='" + logoPicPath + '\'' +
                 ", logoLocPath='" + logoLocPath + '\'' +
                 ", versionId=" + versionId +
                 '}';
@@ -216,12 +216,12 @@ public class AppInfoDTO {
         this.categoryLevel2 = categoryLevel2;
     }
 
-    public String getLogoPocPath() {
-        return logoPocPath;
+    public String getLogoPicPath() {
+        return logoPicPath;
     }
 
-    public void setLogoPocPath(String logoPocPath) {
-        this.logoPocPath = logoPocPath;
+    public void setLogoPicPath(String logoPicPath) {
+        this.logoPicPath = logoPicPath;
     }
 
     public String getLogoLocPath() {

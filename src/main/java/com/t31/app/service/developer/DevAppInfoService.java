@@ -6,4 +6,5 @@ import com.t31.app.util.Page;
 
 public interface DevAppInfoService {
             public Page selectAppInfo(AppInfoDTO appInfo, Page page);
+            public AppInfoList AppInfoView(int id);
 }

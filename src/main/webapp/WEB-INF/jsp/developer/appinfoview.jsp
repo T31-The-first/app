@@ -174,7 +174,12 @@
 									<td>
 									<a href="${appVersion.downloadLink }">${appVersion.apkFileName }</a>
 									</td>
-									<td><fmt:formatDate value="${appVersion.modifyDate }" pattern="yyyy-MM-dd"/></td>
+                                    <c:if test="${appVersion.modifyDate !=null}">
+                                        <td><fmt:formatDate value="${appVersion.modifyDate }" pattern="yyyy-MM-dd"/></td>
+                                    </c:if>
+                                    <c:if test="${appVersion.modifyDate ==null}">
+                                        <td><fmt:formatDate value="${appVersion.creationDate }" pattern="yyyy-MM-dd"/></td>
+                                    </c:if>
 								</tr>
 							</c:forEach>
 						</tbody>

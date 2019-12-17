@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace指用户自定义的命名空间 -->
+<mapper namespace="com.t31.app.dao.developer.DevAppVersionDAO">
+        <select id="selectVersionByAppId" parameterType="int" resultType="com.t31.app.entity.devinfo.AppVersionInfo">
+              SELECT
+                        T1.id,
+                        T2.softwareName AS appName,
+                        T1.versionNo,
+                        T1.versionSize,
+                        T3.valueName AS publishStatusName,
+                        T1.downloadLink,
+                        T1.modifyDate,
+                        T1.creationDate,
+                        T1.apkFileName
+                FROM
+                        app_version AS T1
+                LEFT JOIN app_info AS T2 ON  T1.appId=T2.id
+                LEFT JOIN data_dictionary AS T3 ON T3.typeCode='PUBLISH_STATUS' AND T1.publishStatus=T3.valueId
+                WHERE
+                        T1.appId=#{appId}
+        </select>
+</mapper>

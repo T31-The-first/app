@@ -3,9 +3,12 @@ package com.t31.app.controller.developer.appinfo;
 import com.t31.app.entity.AppCategoryDTO;
 import com.t31.app.entity.AppInfoDTO;
 import com.t31.app.entity.DataDictionaryDTO;
+import com.t31.app.entity.devinfo.AppInfoList;
+import com.t31.app.entity.devinfo.AppVersionInfo;
 import com.t31.app.service.developer.DataDictionaryService;
 import com.t31.app.service.developer.DevAppCategoryService;
 import com.t31.app.service.developer.DevAppInfoService;
+import com.t31.app.service.developer.DevAppVersionService;
 import com.t31.app.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,8 @@ public class AppInfoController {
     private DevAppCategoryService appCategoryService;
     @Autowired
     private DataDictionaryService dataDictionaryService;
+    @Autowired
+    private DevAppVersionService appVersionService;
         /**
          * 用于显示app列表
          * @return
@@ -69,8 +74,11 @@ public class AppInfoController {
         }
         //查看app详细信息
         @RequestMapping("/appview/{id}")
-        public String appInfoView(@PathVariable("id") int id){
-
+        public String appInfoView(@PathVariable("id") int id,Model model){
+            AppInfoList appinfo = appInfoService.AppInfoView(id);
+            List<AppVersionInfo> appVersionInfo = appVersionService.selectVersionListByAppId(id);
+            model.addAttribute("appInfo",appinfo);
+            model.addAttribute("appVersionList",appVersionInfo);
             return "developer/appinfoview";
         }
 }

@@ -9,5 +9,7 @@ import java.util.List;
 public interface DevAppInfoDAO {
     public List<AppInfoList> selectAppInfo(@Param("appinfo") AppInfoDTO appinfo,@Param("start") int start,@Param("size") int size);
     public int selectAppCount(AppInfoDTO appinfo);
-    
+    public AppInfoList selectAppInfoById(int id);
+    //临时方法，更改图片路径，使图片加载出来
+
 }

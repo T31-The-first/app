@@ -6,6 +6,7 @@
 <mapper namespace="com.t31.app.dao.developer.DevAppInfoDAO">
         <select id="selectAppInfo" resultType="com.t31.app.entity.devinfo.AppInfoList">
             select
+                T1.id,
                 T1.softwareName,
                 T1.APKName,
                 T1.softwareSize,
@@ -15,7 +16,8 @@
                 (SELECT categoryName FROM app_category WHERE app_category.id=T1.categoryLevel3) AS categoryLevel3Name,
                 (SELECT valueName FROM data_dictionary WHERE typeCode = 'APP_STATUS' AND valueId=T1.status) AS statusName,
                 T1.downloads,
-                (SELECT versionNo FROM app_version WHERE app_version.id=T1.versionId) AS versionNo
+                (SELECT versionNo FROM app_version WHERE app_version.id=T1.versionId) AS versionNo,
+                T1.status
             from
               app_info AS T1
             <where>
@@ -40,7 +42,8 @@
             </where>
             limit #{start},#{size}
         </select>
-        <select id="selectAppCount" resultType="int" parameterType="com.t31.app.entity.AppInfoDTO">
+
+    <select id="selectAppCount" resultType="int" parameterType="com.t31.app.entity.AppInfoDTO">
             select
                 COUNT(1)
             from
@@ -66,4 +69,26 @@
                 </if>
             </where>
         </select>
+    <select id="selectAppInfoById" resultType="com.t31.app.entity.devinfo.AppInfoList" parameterType="int">
+        select
+                T1.id,
+                T1.softwareName,
+                T1.supportROM,
+                T1.interfaceLanguage,
+                T1.APKName,
+                T1.softwareSize,
+                (SELECT valueName FROM data_dictionary WHERE typeCode = 'APP_FLATFORM' AND valueId=T1.flatformId) AS flatformName,
+                (SELECT categoryName FROM app_category WHERE app_category.id=T1.categoryLevel1) AS categoryLevel1Name,
+                (SELECT categoryName FROM app_category WHERE app_category.id=T1.categoryLevel2) AS categoryLevel2Name,
+                (SELECT categoryName FROM app_category WHERE app_category.id=T1.categoryLevel3) AS categoryLevel3Name,
+                (SELECT valueName FROM data_dictionary WHERE typeCode = 'APP_STATUS' AND valueId=T1.status) AS statusName,
+                T1.downloads,
+                (SELECT versionNo FROM app_version WHERE app_version.id=T1.versionId) AS versionNo,
+                T1.appInfo,
+                T1.logoPicPath
+            from
+              app_info AS T1
+            WHERE
+              T1.id=#{id}
+    </select>
 </mapper>

@@ -20,4 +20,7 @@ public class DevAppInfoServiceImpl implements DevAppInfoService {
         page.setDataList(appInfoDAO.selectAppInfo(appInfo,start,size));
         return page;
     }
+    public AppInfoList AppInfoView(int id){
+        return appInfoDAO.selectAppInfoById(id);
+    }
 }
