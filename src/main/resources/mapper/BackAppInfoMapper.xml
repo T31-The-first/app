@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace指用户自定义的命名空间 -->
+<mapper namespace="com.t31.app.dao.backend.BackAppInfoDao">
+    <!--<resultMap id="userResult" type="appInfo">
+        <id property="id" column="id"/>
+        <result property="softwareName" column="softwareName"/>
+        <result property="apkName" column="APKName"/>
+        <result property="softwareSize" column="softwareSize"/>
+        &lt;!&ndash;flatformName 所属平台，所属分类1-3.categoryLevel1Name categoryLevel2Name  categoryLevel3Name </td>&ndash;&gt;
+        <result property="softwareName" column="softwareName"/>
+
+    </resultMap>-->
+
+    <!--<resultMap id="appInfo" type="appInfo">
+        <id property="id" column="id"/>
+        <result property="flatformId" column="flatformName"/>
+        <result property="categoryLevel1" column="categoryLevel1Name"/>
+        <result property="categoryLevel2" column="categoryLevel2Name"/>
+        <result property="categoryLevel3" column="categoryLevel3Name"/>
+
+    </resultMap>-->
+    
+    <select id="selList" resultType="com.t31.app.entity.backend.AppInfoList2">
+        SELECT
+          id,
+            softwareName,
+            apkName,
+            softwareSize,
+            (select valueName from data_dictionary where typeCode='APP_FLATFORM' and valueId=T1.flatformId) as flatformName,
+            (select categoryName from app_category where id=T1.categoryLevel1) as categoryLevel1Name,
+            (select categoryName from app_category where id=T1.categoryLevel2) as categoryLevel2Name,
+            (select categoryName from app_category where id=T1.categoryLevel3) as categoryLevel3Name,
+            (select valueName FROM data_dictionary where typeCode='APP_STATUS' and valueId=T1.`status`) as statusName,
+            downloads,
+            (select versionNo FROM app_version where id=T1.versionId) as versionNo,
+            versionId,
+            `status`
+
+        FROM
+          app_info T1
+        <where>
+            <if test="info.softwareName!=null and info.softwareName!=''">
+                and softwareName like concat('%',#{info.softwareName},'%')
+            </if>
+            <if test="info.flatformId>0">
+               and flatformId=#{info.flatformId}
+            </if>
+            <if test="info.categoryLevel1>0">
+                and  categoryLevel1=#{info.categoryLevel1}
+            </if>
+            <if test="info.categoryLevel2>0">
+                and categoryLevel2=#{info.categoryLevel2}
+            </if>
+            <if test="info.categoryLevel3>0">
+                and categoryLevel3=#{info.categoryLevel3}
+            </if>
+
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="count" resultType="int" parameterType="com.t31.app.entity.backend.BackAppInfo">
+        SELECT count(1) FROM app_info
+        <where>
+            <if test="softwareName!=null and softwareName!=''">
+                and softwareName=#{softwareName}
+            </if>
+            <if test="flatformId>0">
+                and flatformId=#{flatformId}
+            </if>
+            <if test="categoryLevel1>0">
+                and categoryLevel1=#{categoryLevel1}
+            </if>
+            <if test="categoryLevel2>0">
+                and categoryLevel2=#{categoryLevel2}
+            </if>
+            <if test="categoryLevel3>0">
+                and categoryLevel3=#{categoryLevel3}
+            </if>
+
+        </where>
+
+    </select>
+    
+    <select id="selById" resultType="com.t31.app.entity.backend.AppInfoList2">
+        SELECT
+          id,
+          softwareName,
+          APKName,
+          supportROM,
+          interfaceLanguage,
+          softwareSize,
+          downloads,
+            (select valueName from data_dictionary where typeCode='APP_FLATFORM' and valueId=T1.flatformId) as flatformName,
+            (select categoryName from app_category where id=T1.categoryLevel1) as categoryLevel1Name,
+            (select categoryName from app_category where id=T1.categoryLevel2) as categoryLevel2Name,
+            (select categoryName from app_category where id=T1.categoryLevel3) as categoryLevel3Name,
+            (select valueName FROM data_dictionary where typeCode='APP_STATUS' and valueId=T1.`status`) as statusName,
+            (select versionNo FROM app_version where id=T1.versionId) as versionNo,
+            versionId,
+            `status`,
+            appInfo,
+            logoPicPath
+            FROM app_info T1
+            WHERE id=#{id}
+    </select>
+
+    <update id="upAppStatus" parameterType="int">
+        UPDATE app_info SET  status=#{param2} where id=#{param1}
+    </update>
+</mapper>
