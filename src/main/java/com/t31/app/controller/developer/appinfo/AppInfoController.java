@@ -10,6 +10,7 @@ import com.t31.app.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,5 +66,11 @@ public class AppInfoController {
         public List<AppCategoryDTO> appCategoryList(int pid){
 
             return appCategoryService.selectcategoryLevelList(pid);
+        }
+        //查看app详细信息
+        @RequestMapping("/appview/{id}")
+        public String appInfoView(@PathVariable("id") int id){
+
+            return "developer/appinfoview";
         }
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface DevAppInfoDAO {
     public List<AppInfoList> selectAppInfo(@Param("appinfo") AppInfoDTO appinfo,@Param("start") int start,@Param("size") int size);
     public int selectAppCount(AppInfoDTO appinfo);
+    
 }
