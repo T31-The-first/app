@@ -23,5 +23,8 @@ public interface DevAppInfoDAO {
     public AppInfoList selAppInfoById(int id); //根据id查询info信息
     public int upLogoById(int id);//根据id修改图片路径
 
+    //修改app信息
+    public int updateAppInfo(AppInfoDTO appInfo);
+
 
 }
