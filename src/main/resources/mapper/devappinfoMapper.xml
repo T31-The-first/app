@@ -129,4 +129,90 @@
     <select id="selById" parameterType="int" resultType="int">
         SELECT COUNT(1) FROM app_info where id=#{param1}
     </select>
+    
+    <select id="selAppInfoById" resultType="com.t31.app.entity.devinfo.AppInfoList" parameterType="int">
+        SELECT
+          T1.id,
+                T1.softwareName,
+                T1.supportROM,
+                T1.interfaceLanguage,
+                T1.APKName,
+                T1.softwareSize,
+                (SELECT valueName FROM data_dictionary WHERE typeCode = 'APP_STATUS' AND valueId=T1.status) AS statusName,
+                appInfo,
+                flatformId,
+                status,
+                categoryLevel3,
+                downloads,
+                categoryLevel1,
+                categoryLevel2,
+                logoPicPath,
+                logoLocPath
+        FROM
+          app_info T1
+        where id=#{param1}
+
+    </select>
+    <update id="upLogoById" parameterType="int">
+        UPDATE app_info SET logoPicPath=null where id=#{id}
+    </update>
+    
+    <update id="upAppInfo" parameterType="com.t31.app.entity.AppInfoDTO">
+        UPDATE
+          app_info
+        <set>
+            <if test="softwareName!=null and softwareName!=''">
+                softwareName=#{softwareName},
+            </if>
+            <if test="APKName!=null and APKName!=''">
+                APKName=#{APKName},
+            </if>
+            <if test="supportROM!=null and supportROM!=''">
+                supportROM=#{supportROM},
+            </if>
+            <if test="interfaceLanguage!=null and interfaceLanguage!=''">
+                interfaceLanguage=#{interfaceLanguage},
+            </if>
+            <if test="`softwareSize`>0">
+                softwareSize=#{softwareSize},
+            </if>
+            <if test="appInfo!=null and appInfo!=''">
+                appInfo=#{appInfo},
+            </if>
+            <if test="`status`>1">
+                status=#{status},
+            </if>
+            <if test="flatformId>0">
+                flatformId=#{flatformId},
+            </if>
+            <if test="categoryLevel3>0">
+                categoryLevel3=#{categoryLevel3},
+            </if>
+            <if test="categoryLevel2>0">
+                categoryLevel2=#{categoryLevel2},
+            </if>
+            <if test="categoryLevel1>0">
+                categoryLevel1=#{categoryLevel1},
+            </if>
+            <if test="downloads>0">
+                downloads=#{downloads},
+            </if>
+            <if test="modifyBy>0">
+                modifyBy=#{modifyBy},
+            </if>
+            <if test="modifyDate!=null">
+                modifyDate=#{modifyDate},
+            </if>
+            <if test="logoPicPath!=null and logoPicPath!=''">
+                logoPicPath=#{logoPicPath},
+            </if>
+            <if test="logoLocPath!=null and logoLocPath!=''">
+                logoLocPath=#{logoLocPath},
+            </if>
+            <if test="versionId>0">
+                versionId=#{versionId},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>

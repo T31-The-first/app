@@ -16,4 +16,15 @@ public class DataDictonaryTest {
     public void selectStatusListTest(){
         System.out.println(dataDictionaryService.selectStatusList());
     }
+
+    @Test
+    public void selInfo(){
+        int num=dataDictionaryService.selByCodeAndTypeName("待审核");
+        if(num>0){
+            System.out.println("查到数据"+num);
+        }else{
+            System.out.println("没有查到数据"+num);
+        }
+
+    }
 }

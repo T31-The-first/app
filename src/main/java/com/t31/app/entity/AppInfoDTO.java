@@ -21,6 +21,7 @@ public class AppInfoDTO {
         private int createdBy;
         private Date creationDate;
         private int modifyBy;
+        private Date modifyDate;
         private int categoryLevel1;
         private int categoryLevel2;
         private String logoPicPath;
@@ -238,5 +239,13 @@ public class AppInfoDTO {
 
     public void setVersionId(int versionId) {
         this.versionId = versionId;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

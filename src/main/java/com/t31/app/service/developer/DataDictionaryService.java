@@ -9,4 +9,7 @@ public interface DataDictionaryService {
             public List<DataDictionaryDTO> selectStatusList();
             //平台列表
             public List<DataDictionaryDTO> selectFlatFormList();
+
+
+    public int selByCodeAndTypeName(String statusName);
 }

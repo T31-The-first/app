@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DevAppInfoServiceImpl implements DevAppInfoService {
+public class DevAppInfoServiceImpl implements DevAppInfoService{
     @Autowired
     private DevAppInfoDAO appInfoDAO;
     @Override
@@ -42,5 +42,20 @@ public class DevAppInfoServiceImpl implements DevAppInfoService {
     @Override
     public int selAppById(int id) {
         return appInfoDAO.selById(id);
+    }
+
+    @Override
+    public AppInfoList selAppInfoById(int id) {
+        return appInfoDAO.selAppInfoById(id);
+    }
+
+    @Override
+    public int upLogoById(int id) {
+        return appInfoDAO.upLogoById(id);
+    }
+
+    @Override
+    public int upAppInfo(AppInfoDTO infoDTO) {
+        return appInfoDAO.upAppInfo(infoDTO);
     }
 }

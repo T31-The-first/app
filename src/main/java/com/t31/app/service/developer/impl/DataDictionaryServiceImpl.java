@@ -21,4 +21,9 @@ public class DataDictionaryServiceImpl implements DataDictionaryService {
     public List<DataDictionaryDTO> selectFlatFormList(){
         return dataDictionaryDAO.selectDictionaryList(flatFormCode);
     }
+
+    @Override
+    public int selByCodeAndTypeName(String statusName) {
+        return dataDictionaryDAO.selByCodeAndTypeName(statusName);
+    }
 }

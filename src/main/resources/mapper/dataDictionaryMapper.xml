@@ -13,4 +13,7 @@
                 typeCode=#{dictionaryCode}
         </select>
 
+    <select id="selByCodeAndTypeName" parameterType="string" resultType="int">
+        SELECT valueId FROM data_dictionary where typeCode='APP_STATUS' and valueName=#{param1}
+    </select>
 </mapper>

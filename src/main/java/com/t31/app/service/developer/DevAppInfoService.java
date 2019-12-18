@@ -13,4 +13,8 @@ public interface DevAppInfoService {
             public int addApp(AppInfoDTO infoDTO);
             public int delApp(int id);
             public int selAppById(int id);
+
+            public AppInfoList selAppInfoById(int id);
+     public int upLogoById(int id);
+     public int upAppInfo(AppInfoDTO appInfoDTO);
 }

@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -87,5 +88,27 @@ public class AppInfoTest {
             }else{
                 System.out.println("meiyou");
             }
+    }
+
+    @Test
+    public void selAppInfo(){
+            AppInfoList list=appInfoService.selAppInfoById(58);
+        System.out.println(list.getStatusName());
+    }
+
+    @Test
+    public void upAppinfo(){
+            AppInfoDTO infoDTO=new AppInfoDTO();
+            infoDTO.setId(66);
+            infoDTO.setAppInfo("weqe");
+            infoDTO.setModifyDate(new Date());
+            infoDTO.setDownloads(10000);
+
+            if(appInfoService.upAppInfo(infoDTO)>0){
+                System.out.println("修改成功！");
+            }else {
+                System.out.println("修改失败");
+            }
+
     }
 }

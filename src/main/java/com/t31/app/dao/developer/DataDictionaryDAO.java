@@ -7,4 +7,6 @@ import java.util.List;
 public interface DataDictionaryDAO {
         //查询状态列表
         public List<DataDictionaryDTO> selectDictionaryList(String dictionaryCode);
+
+        public int selByCodeAndTypeName(String statusName);
 }
