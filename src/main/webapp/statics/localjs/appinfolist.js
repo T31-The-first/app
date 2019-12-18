@@ -105,8 +105,8 @@ $(document).on("click",".saleSwichOpen,.saleSwichClose",function(){
 
 var saleSwitchAjax = function(appId,obj){
 	$.ajax({
-		type:"PUT",
-		url:appId+"/sale.json",
+		type:"post",
+		url:"sale/"+appId,
 		dataType:"json",
 		success:function(data){
 			/*
@@ -115,7 +115,7 @@ var saleSwitchAjax = function(appId,obj){
 			 * appId:appId
 			 * errorCode:param000001
 			 */
-			if(data.errorCode === '0'){
+			// if(data.errorCode === '0'){
 				if(data.resultMsg === "success"){//操作成功
 					if("open" === obj.attr("saleSwitch")){
 						//alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【上架】操作成功");
@@ -148,25 +148,21 @@ var saleSwitchAjax = function(appId,obj){
 					}
 				}else if(data.resultMsg === "failed"){//删除失败
 					if("open" === obj.attr("saleSwitch")){
-						alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【上架】操作失败");
+						alert("【"+obj.attr("appsoftwarename")+"】的【上架】操作失败");
 					}else if("close" === obj.attr("saleSwitch")){
-						alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【下架】操作失败");
+						alert("【"+obj.attr("appsoftwarename")+"】的【下架】操作失败");
 					}
 				}
-			}else{
-				if(data.errorCode === 'exception000001'){
-					alert("对不起，系统出现异常，请联系IT管理员");
-				}else if(data.errorCode === 'param000001'){
-					alert("对不起，参数出现错误，您可能在进行非法操作");
-				}
-			}
+			// }else{
+			// 	if(data.errorCode === 'exception000001'){
+			// 		alert("对不起，系统出现异常，请联系IT管理员");
+			// 	}else if(data.errorCode === 'param000001'){
+			// 		alert("对不起，参数出现错误，您可能在进行非法操作");
+			// 	}
+			// }
 		},
 		error:function(data){
-			if("open" === obj.attr("saleSwitch")){
-				alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【上架】操作成功");
-			}else if("close" === obj.attr("saleSwitch")){
-				alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【下架】操作成功");
-			}
+			alert("出现异常，错误码404");
 		}
 	});
 };

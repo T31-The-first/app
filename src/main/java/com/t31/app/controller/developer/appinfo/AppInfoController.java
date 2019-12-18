@@ -491,4 +491,46 @@ public class AppInfoController {
             return "/modify.html";
         }
     }
+
+    /**
+     * 上架或者下架操作
+     * @return
+     */
+    @RequestMapping("/sale/{id}")
+    @ResponseBody
+    public String appSale(@PathVariable int id){
+        //查询这个app现在的状态
+        AppInfoList list = appInfoService.selAppInfoById(id);
+        int appStatus = list.getStatus();
+        AppInfoDTO infoDTO = new AppInfoDTO();
+        infoDTO.setId(id);
+        String result = "";
+        if(appStatus==2||appStatus==5){
+            //审核通过或者已下架，进行上架操作
+            infoDTO.setStatus(4);
+            int upResult = appInfoService.upAppInfo(infoDTO);
+            if(upResult>0){
+                //上架成功
+                result="success";
+            }else{
+                //上架失败
+                result="failed";
+            }
+        }else if(appStatus==4){
+            //已上架，进行下架操作
+            infoDTO.setStatus(5);
+            int upResult = appInfoService.upAppInfo(infoDTO);
+            if(upResult>0){
+                //下架成功
+                result="success";
+            }else{
+                //下架失败
+                result="failed";
+
+            }
+        }else{
+            //没有需要的状态进入这里，属于非法操作
+        }
+        return "{\"resultMsg\":\""+result+"\"}";
+    }
 }
