@@ -154,6 +154,8 @@ public class AppInfoController {
                 List<AppVersionInfo> appVersionInfo = appVersionService.selectVersionListByAppId(aid);
                 //查询最新版本信息
                 AppVersionDTO appVersion = appVersionService.selectVersionById(vid);
+                appVersion.setId(vid);
+                appVersion.setAppId(aid);
                 model.addAttribute("appVersionList",appVersionInfo);
                 model.addAttribute("appVersion",appVersion);
                 return "developer/appversionmodify";
@@ -164,7 +166,7 @@ public class AppInfoController {
              * @return
              */
             @RequestMapping("appversionmodifysave")
-            public String appVersionModifySave(Model model,AppVersionDTO appVersion,HttpServletRequest request,@Param("file") MultipartFile apkFile) throws IOException {
+            public String appVersionModifySave(Model model,AppVersionDTO appVersion,HttpServletRequest request,@RequestParam("file") MultipartFile apkFile) throws IOException {
                 if(!apkFile.isEmpty()){
                     //apk文件名
                     String apkName = apkFile.getOriginalFilename();
@@ -181,10 +183,16 @@ public class AppInfoController {
                     }else{
                         model.addAttribute("fileUploadError","上传的文件必须为apk格式");
                     }
-
                 }
-                
-                return null;
+                int result = appVersionService.updateVersion(appVersion);
+                if(result>0){
+                    //修改成功
+
+                }else{
+                    //修改失败
+                    model.addAttribute("","修改失败");
+                }
+                return "forward:/developer/appinfo/appversionmodify.html?aid="+appVersion.getAppId()+"&vid="+appVersion.getId();
             }
 
         /**

@@ -3,7 +3,7 @@ package com.t31.app.entity;
 import java.util.Date;
 
 public class AppVersionDTO {
-        private String id;
+        private int id;
         private int appId;
         private String versionNo;
         private String versionInfo;
@@ -36,11 +36,11 @@ public class AppVersionDTO {
                 '}';
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
