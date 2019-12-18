@@ -7,8 +7,10 @@ import com.t31.app.service.developer.DataDictionaryService;
 import com.t31.app.service.developer.DevAppCategoryService;
 import com.t31.app.service.developer.DevAppInfoService;
 import com.t31.app.service.developer.DevAppVersionService;
+import com.t31.app.util.FileUploadUtil;
 import com.t31.app.util.Page;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,13 +83,30 @@ public class AppInfoController {
             model.addAttribute("appVersionList",appVersionInfo);
             return "developer/appinfoview";
         }
-        @RequestMapping("/appversionadd")
+
+    /**
+     * 新增页面
+     * @param id
+     * @param model
+     * @return
+     */
+        @RequestMapping("/appversionadd.html")
         public String addAppVersionBefore(int id,Model model){
             List<AppVersionInfo> appVersionInfo = appVersionService.selectVersionListByAppId(id);
             model.addAttribute("appVersionList",appVersionInfo);
             model.addAttribute("appId",id);
             return "developer/appversionadd";
         }
+
+    /**
+     * 保存新增结果
+     * @param appVersion
+     * @param apkFile
+     * @param model
+     * @param request
+     * @return
+     * @throws IOException
+     */
         @RequestMapping("/addversionsave")
         public String addAppVersion(AppVersionDTO appVersion,@RequestParam("a_downloadLink") MultipartFile apkFile,Model model,HttpServletRequest request) throws IOException {
             if(!apkFile.isEmpty()){
@@ -149,8 +168,44 @@ public class AppInfoController {
                 model.addAttribute("fileUploadError","未上传文件");
             }
 
-            return "forward:/developer/appinfo/appversionadd?id="+appVersion.getAppId();
+            return "forward:/developer/appinfo/appversionadd.html?id="+appVersion.getAppId();
         }
+
+        /**
+         * 修改版本页面
+         * @return
+         */
+        @RequestMapping("/appversionmodify.html")
+            public String appVersionModify(int aid,int vid,Model model){
+                //查询历史版本列表
+                List<AppVersionInfo> appVersionInfo = appVersionService.selectVersionListByAppId(aid);
+                //查询最新版本信息
+                AppVersionDTO appVersion = appVersionService.selectVersionById(vid);
+                model.addAttribute("appVersionList",appVersionInfo);
+                model.addAttribute("appVersion",appVersion);
+                return "developer/appversionmodify";
+            }
+
+            /**
+             * 修改提交地址
+             * @return
+             */
+            @RequestMapping("appversionmodifysave")
+            public String appVersionModifySave(Model model,AppVersionDTO appVersion,HttpServletRequest request,@Param("file") MultipartFile apkFile) throws IOException {
+                if(!apkFile.isEmpty()){
+                    //进行文件上传操作
+                        appVersion = FileUploadUtil.apkFileUpload(appVersion,apkFile,request);
+
+                        if(request.getSession().getAttribute("devUserSession")!=null){
+                            DevUserDTO userDTO = (DevUserDTO)request.getSession().getAttribute("devUserSession");
+                            int createdById = userDTO.getId();
+                            appVersion.setModifyBy(createdById);
+                        }
+                    }else{
+                        model.addAttribute("fileUploadError","上传的文件必须为apk格式");
+                    }
+                return null;
+            }
 
         /**
          * 12-17 20:20

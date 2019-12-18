@@ -17,7 +17,8 @@
                 (SELECT valueName FROM data_dictionary WHERE typeCode = 'APP_STATUS' AND valueId=T1.status) AS statusName,
                 T1.downloads,
                 (SELECT versionNo FROM app_version WHERE app_version.id=T1.versionId) AS versionNo,
-                T1.status
+                T1.status,
+                T1.versionId
             from
               app_info AS T1
             <where>
@@ -125,6 +126,18 @@
         DELETE FROM app_info where id=#{param1}
 
     </delete>
+    <update id="updateAppInfo" parameterType="com.t31.app.entity.AppInfoDTO">
+        UPDATE
+          app_info
+        <set>
+            <if test="versionId>0">
+                versionId=#{versionId}
+            </if>
+        </set>
+        WHERE
+            id=#{id}
+
+    </update>
     
     <select id="selById" parameterType="int" resultType="int">
         SELECT COUNT(1) FROM app_info where id=#{param1}
