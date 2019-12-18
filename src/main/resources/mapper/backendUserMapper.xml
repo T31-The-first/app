@@ -4,8 +4,12 @@
 
 <!-- namespace指用户自定义的命名空间 -->
 <mapper namespace="com.t31.app.dao.backend.BackendUserDao">
-    <select id="doLogin" resultType="com.t31.app.entity.BackendUserDTO" parameterType="string">
-        SELECT * FROM backend_user
-        where userCode=#{param1} and userPassword=#{param2}
+    <select id="doLogin" resultType="com.t31.app.entity.backend.BackendUserDTOInfo" parameterType="string">
+        SELECT
+          T1.id,userCode,userName,userType,userPassword,
+          T2.valueName as userTypeName
+        FROM backend_user T1
+        LEFT JOIN data_dictionary T2 on T1.userType=t2.valueId  and T2.typeCode='USER_TYPE'
+        WHERE userCode=#{param1} and userPassword=#{param2}
     </select>
 </mapper>

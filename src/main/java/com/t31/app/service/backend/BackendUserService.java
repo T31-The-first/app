@@ -1,6 +1,7 @@
 package com.t31.app.service.backend;
 
 import com.t31.app.entity.BackendUserDTO;
+import com.t31.app.entity.backend.BackendUserDTOInfo;
 
 /**
  * description: BackendUserService
@@ -9,6 +10,6 @@ import com.t31.app.entity.BackendUserDTO;
  * version: 1.0
  */
 public interface BackendUserService {
-    public BackendUserDTO login(String code, String pwd);
+    public BackendUserDTOInfo login(String code, String pwd);
 
 }

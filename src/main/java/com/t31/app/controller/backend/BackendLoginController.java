@@ -1,6 +1,7 @@
 package com.t31.app.controller.backend;
 
 import com.t31.app.entity.BackendUserDTO;
+import com.t31.app.entity.backend.BackendUserDTOInfo;
 import com.t31.app.service.backend.BackendUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,14 +32,20 @@ public class BackendLoginController {
 
 
         if(userService.login(userCode,pwd)!=null){
-            BackendUserDTO user=userService.login(userCode,pwd);
+            BackendUserDTOInfo user=userService.login(userCode,pwd);
             session.setAttribute("userSession",user);
             session.setMaxInactiveInterval(1800);
-            return "redirect:/backends/applist.html";
+            return "/backend/main";
         }else{
             return "/login/login.html";
         }
 
     }
 
+    @RequestMapping("/loginOut")
+    public String loginOut(HttpSession session){
+        session.invalidate();
+        return "/back/login.html";
+
+    }
 }

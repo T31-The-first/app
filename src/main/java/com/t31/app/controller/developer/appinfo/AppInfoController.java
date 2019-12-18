@@ -108,7 +108,7 @@ public class AppInfoController {
      * @throws IOException
      */
         @RequestMapping("/addversionsave")
-        public String addAppVersion(AppVersionDTO appVersion,@RequestParam("a_downloadLink") MultipartFile apkFile,Model model,HttpServletRequest request) throws IOException {
+        public String addAppVersion(AppVersionDTO appVersion,@RequestParam("a_downloadLink")MultipartFile apkFile,Model model,HttpServletRequest request) throws IOException {
             if(!apkFile.isEmpty()){
                 //apk文件名
                 String apkName = apkFile.getOriginalFilename();
@@ -357,12 +357,12 @@ public class AppInfoController {
             if (targetFile.exists()) {
                 targetFile.delete();
             } else {
-                System.out.println("文件不存在！");
+//                System.out.println("文件不存在！");
             }
             if (localFile.exists()) {
                 localFile.delete();
             } else {
-                System.out.println("磁盘文件不存在！");
+//                System.out.println("磁盘文件不存在！");
             }
         }
     }
@@ -381,7 +381,7 @@ public class AppInfoController {
 
     @RequestMapping("/delFile")
     @ResponseBody
-    public String delFile(int id,String flag,HttpServletRequest request){
+    public String delFile(int id,String flag,HttpServletRequest request,Model model){
      String rs="failed";
 
         // 文件路径
@@ -397,7 +397,7 @@ public class AppInfoController {
                 targetFile.delete();
                 rs="success";
             } else {
-                System.out.println("文件不存在！");
+//                System.out.println("文件不存在！");
             }
 
             //磁盘路径
@@ -406,7 +406,8 @@ public class AppInfoController {
                 localFile.delete();
                 rs="success";
             } else {
-                System.out.println("磁盘文件不存在！");
+//                System.out.println("磁盘文件不存在！");
+
             }
 
             if("success".equals(rs)){

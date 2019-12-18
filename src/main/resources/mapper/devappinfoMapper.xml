@@ -192,7 +192,7 @@
             <if test="appInfo!=null and appInfo!=''">
                 appInfo=#{appInfo},
             </if>
-            <if test="`status`>1">
+            <if test="`status`>0">
                 status=#{status},
             </if>
             <if test="flatformId>0">

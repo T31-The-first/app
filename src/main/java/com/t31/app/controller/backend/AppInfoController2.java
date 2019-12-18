@@ -25,9 +25,9 @@ public class AppInfoController2 {
                         @RequestParam(value = "status",required = false) int status,
                         Model model){
         if(infoService.upAppStatus(id,status)>0){
-            return "redirect:backends/applist.html";
+            return "redirect:/backends/applist.html";
         }else{
-            return "forward:backends/check.html";
+            return "forward:/backends/check.html";
         }
 
     }

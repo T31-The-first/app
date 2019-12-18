@@ -3,6 +3,7 @@ package com.t31.app.service.backend.impl;
 
 import com.t31.app.dao.backend.BackendUserDao;
 import com.t31.app.entity.BackendUserDTO;
+import com.t31.app.entity.backend.BackendUserDTOInfo;
 import com.t31.app.service.backend.BackendUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class BackendUserServiceImpl implements BackendUserService {
     private BackendUserDao userDao;
 
     @Override
-    public BackendUserDTO login(String code, String pwd) {
+    public BackendUserDTOInfo login(String code, String pwd) {
         return userDao.doLogin(code,pwd);
     }
 }
