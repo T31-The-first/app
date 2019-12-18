@@ -10,4 +10,5 @@ public interface DevAppVersionDAO {
 
     public int delVersionByAppId(int appId);//根据appId删除版本信息
     public int selByAppId(int appId); //先根据appId查询有么有版本信息，，然后执行删除
+    public int addAppVersion(AppVersionDTO appVersion);
 }

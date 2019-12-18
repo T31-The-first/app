@@ -23,10 +23,37 @@
                         T1.appId=#{appId}
         </select>
     
-    <select id="selByAppId" resultType="int" parameterType="int">
-        SELECT COUNT(1) FROM app_version where appId=#{param1}
-    </select>
-    <delete id="delVersionByAppId" parameterType="int">
-        DELETE FROM app_version where appId=#{param1}
-    </delete>
+        <select id="selByAppId" resultType="int" parameterType="int">
+            SELECT COUNT(1) FROM app_version where appId=#{param1}
+        </select>
+        <delete id="delVersionByAppId" parameterType="int">
+            DELETE FROM app_version where appId=#{param1}
+        </delete>
+        <insert id="addAppVersion" parameterType="com.t31.app.entity.AppVersionDTO">
+            INSERT INTO
+                app_version(
+                  id,
+                  appId,
+                  versionNo,
+                  versionInfo,
+                  publishStatus,
+                  downloadLink,
+                  versionSize,
+                  createdBy,
+                  creationDate,
+                  apkLocPath,
+                  apkFileName)
+          VALUES (DEFAULT ,
+                #{appId},
+                #{versionNo},
+                #{versionInfo},
+                #{publishStatus},
+                #{downloadLink},
+                #{versionSize},
+                #{createdBy},
+                NOW(),
+                #{apkLocPath},
+                #{apkFileName}
+                )
+        </insert>
 </mapper>

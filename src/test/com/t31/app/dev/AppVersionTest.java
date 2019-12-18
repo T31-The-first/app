@@ -1,5 +1,6 @@
 package com.t31.app.dev;
 
+import com.t31.app.entity.AppVersionDTO;
 import com.t31.app.entity.devinfo.AppVersionInfo;
 import com.t31.app.service.developer.DevAppVersionService;
 import org.junit.Test;
@@ -20,6 +21,25 @@ public class AppVersionTest {
             List<AppVersionInfo> versionInfo = appVersionService.selectVersionListByAppId(58);
             for (AppVersionInfo versionInfo1:versionInfo){
                 System.out.println(versionInfo1);
+            }
+        }
+        @Test
+        public void addVersionTest(){
+            AppVersionDTO appVersionDTO = new AppVersionDTO();
+            appVersionDTO.setAppId(48);
+            appVersionDTO.setApkFileName("123");
+            appVersionDTO.setApkLocPath("456");
+            appVersionDTO.setCreatedBy(1);
+            appVersionDTO.setDownloadLink("789");
+            appVersionDTO.setVersionNo("1.1");
+            appVersionDTO.setPublishStatus(3);
+            appVersionDTO.setVersionSize(10);
+            appVersionDTO.setVersionInfo("iiii");
+            int result = appVersionService.addAppVersion(appVersionDTO);
+            if(result>0){
+                System.out.println("新增成功");
+            }else{
+                System.out.println("新增失败");
             }
         }
 }

@@ -1,8 +1,6 @@
 package com.t31.app.controller.developer.appinfo;
 
-import com.t31.app.entity.AppCategoryDTO;
-import com.t31.app.entity.AppInfoDTO;
-import com.t31.app.entity.DataDictionaryDTO;
+import com.t31.app.entity.*;
 import com.t31.app.entity.devinfo.AppInfoList;
 import com.t31.app.entity.devinfo.AppVersionInfo;
 import com.t31.app.service.developer.DataDictionaryService;
@@ -18,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+import java.io.*;
 import java.util.List;
 
 @Controller
@@ -82,7 +80,76 @@ public class AppInfoController {
             model.addAttribute("appVersionList",appVersionInfo);
             return "developer/appinfoview";
         }
+        @RequestMapping("/appversionadd")
+        public String addAppVersionBefore(int id,Model model){
+            List<AppVersionInfo> appVersionInfo = appVersionService.selectVersionListByAppId(id);
+            model.addAttribute("appVersionList",appVersionInfo);
+            model.addAttribute("appId",id);
+            return "developer/appversionadd";
+        }
+        @RequestMapping("/addversionsave")
+        public String addAppVersion(AppVersionDTO appVersion,@RequestParam("a_downloadLink") MultipartFile apkFile,Model model,HttpServletRequest request) throws IOException {
+            if(!apkFile.isEmpty()){
+                //apk文件名
+                String apkName = apkFile.getOriginalFilename();
+                String apkSuffix = apkName.substring(apkName.lastIndexOf(".")+1,apkName.length());
+                if(apkSuffix.equals("apk")){
+                    String downloadLink = "/statics/uploadfiles/"+apkName;
+                    //上传文件所在磁盘位置
+                    String localFilePath = "D:\\javawork\\t31-ssm-workspace\\app\\src\\main\\webapp\\statics\\uploadfiles\\";
+                    //上传文件所在web项目位置
+                    String webFilePath = request.getServletContext().getRealPath("/statics/uploadfiles");
+                    File webFile = new File(webFilePath,apkName);
+                    if(!webFile.exists()){
+                        webFile.mkdirs();
+                    }
+                    //上传文件到web项目位置
+                    apkFile.transferTo(webFile);
+                    //文件复制到磁盘位置
+                    File localFile = new File(localFilePath+apkName);
+                    if(!localFile.exists()){
+                        localFile.createNewFile();
+                    }
+                    InputStream inputFile = new FileInputStream(webFile);
+                    OutputStream outputStreamFile = new FileOutputStream(localFile);
+                    byte[] bytes = new byte[inputFile.available()];
+                    inputFile.read(bytes);
+                    outputStreamFile.write(bytes);
+                    inputFile.close();
+                    outputStreamFile.close();
+                    //上传文件完成，进行数据库新增操作
+                    appVersion.setDownloadLink(downloadLink);
+                    appVersion.setApkLocPath(localFile.getAbsolutePath());
+                    appVersion.setApkFileName(apkName);
+                    //获取创建人id
 
+                    if(request.getSession().getAttribute("devUserSession")!=null){
+                        DevUserDTO userDTO = (DevUserDTO)request.getSession().getAttribute("devUserSession");
+                        int createdById = userDTO.getId();
+                        appVersion.setCreatedBy(createdById);
+                    }
+
+
+                    int result = appVersionService.addAppVersion(appVersion);
+                    if(result>0){
+                        //新增版本成功
+                        //model.addAttribute("magess","新增版本成功");
+                    }else{
+                        //新增版本失败
+                        model.addAttribute("error","新增版本失败");
+                    }
+
+
+                }else{
+                    model.addAttribute("fileUploadError","上传的文件必须为apk格式");
+                }
+
+            }else{
+                model.addAttribute("fileUploadError","未上传文件");
+            }
+
+            return "forward:/developer/appinfo/appversionadd?id="+appVersion.getAppId();
+        }
 
         /**
          * 12-17 20:20
