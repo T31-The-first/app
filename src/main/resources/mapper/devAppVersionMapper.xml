@@ -29,7 +29,8 @@
         <delete id="delVersionByAppId" parameterType="int">
             DELETE FROM app_version where appId=#{param1}
         </delete>
-        <insert id="addAppVersion" parameterType="com.t31.app.entity.AppVersionDTO">
+
+    <insert id="addAppVersion" parameterType="com.t31.app.entity.AppVersionDTO">
             INSERT INTO
                 app_version(
                   id,
@@ -56,4 +57,24 @@
                 #{apkFileName}
                 )
         </insert>
+        <select id="selectVersionById" parameterType="int" resultType="com.t31.app.entity.AppVersionDTO">
+              SELECT
+                  versionNo,
+                  versionSize,
+                  versionInfo
+              FROM
+                  app_version
+              WHERE
+                  id=#{id}
+        </select>
+        <select id="selectNewVersionByAppId" parameterType="int" resultType="int">
+                SELECT
+                    id
+                FROM
+                    app_version
+                WHERE
+                    appId=#{appId}
+                ORDER BY creationDate DESC
+                LIMIT 0,1
+        </select>
 </mapper>

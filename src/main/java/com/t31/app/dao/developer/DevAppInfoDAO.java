@@ -18,4 +18,6 @@ public interface DevAppInfoDAO {
     public int addApp(AppInfoDTO infoDTO);
     public int delApp(int id);//根据appid删除app，相应的版本信息也要删除
     public int selById(int id);//根据id查找有没有相关的app信息
+    //修改app信息
+    public int updateAppInfo(AppInfoDTO appInfo);
 }
