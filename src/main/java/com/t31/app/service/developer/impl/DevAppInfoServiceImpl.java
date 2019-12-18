@@ -38,4 +38,9 @@ public class DevAppInfoServiceImpl implements DevAppInfoService {
     public int delApp(int id) {
         return appInfoDAO.delApp(id);
     }
+
+    @Override
+    public int selAppById(int id) {
+        return appInfoDAO.selById(id);
+    }
 }

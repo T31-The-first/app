@@ -114,7 +114,7 @@
           #{categoryLevel3},
           #{downloads},
           #{createdBy},
-          #{creationDate},
+          NOW(),
           #{categoryLevel1},
           #{categoryLevel2},
           #{logoPicPath},
@@ -125,4 +125,8 @@
         DELETE FROM app_info where id=#{param1}
 
     </delete>
+    
+    <select id="selById" parameterType="int" resultType="int">
+        SELECT COUNT(1) FROM app_info where id=#{param1}
+    </select>
 </mapper>

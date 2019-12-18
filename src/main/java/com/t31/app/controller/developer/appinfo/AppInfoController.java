@@ -192,4 +192,39 @@ public class AppInfoController {
             return "/add.html";
         }
     }
+
+
+    /**
+     * 删除app信息的同时也要删除此app关联的历史版本信息
+     * @return
+     */
+    @RequestMapping("/delApp")
+    @ResponseBody
+    public String delAppInfo(@RequestParam("id") int appId){
+        String rs="";
+        if(appInfoService.selAppById(appId)>0){
+            if(appVersionService.selByAppId(appId)>0){
+                int num=appVersionService.delVersionInfo(appId);
+                if(num>0){
+                    if(appInfoService.delApp(appId)>0){
+                        rs="true";
+                    }else{
+                        rs="false";
+                    }
+                }else{
+                    rs="false";
+                }
+            }else{
+                if(appInfoService.delApp(appId)>0){
+                    rs="true";
+                }else {
+                    rs = "false";
+                }
+            }
+        }else{
+            rs="notexist";
+        }
+
+        return "{\"delResult\":\""+rs+"\"}";
+    }
 }

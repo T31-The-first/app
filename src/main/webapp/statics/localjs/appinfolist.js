@@ -183,13 +183,14 @@ $(".deleteApp").on("click",function(){
 	if(confirm("你确定要删除APP应用【"+obj.attr("appsoftwarename")+"】及其所有的版本吗？")){
 		$.ajax({
 			type:"GET",
-			url:"delapp.json",
+			url:"/developer/appinfo/delApp",
 			data:{id:obj.attr("appinfoid")},
 			dataType:"json",
 			success:function(data){
 				if(data.delResult == "true"){//删除成功：移除删除行
 					alert("删除成功");
 					obj.parents("tr").remove();
+                    location.reload();
 				}else if(data.delResult == "false"){//删除失败
 					alert("对不起，删除AAP应用【"+obj.attr("appsoftwarename")+"】失败");
 				}else if(data.delResult == "notexist"){
