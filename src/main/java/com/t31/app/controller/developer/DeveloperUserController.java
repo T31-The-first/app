@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/developer")
@@ -37,5 +38,15 @@ public class DeveloperUserController {
                 model.addAttribute("error","用户名或密码不正确！");
                 return "devlogin";
             }
+        }
+
+    /**
+     * 退出登录
+     * @return
+     */
+    @RequestMapping("/logout")
+        public String logout(HttpSession session){
+            session.removeAttribute("devUserSession");
+            return "redirect:/developer/devlogin.html";
         }
 }
