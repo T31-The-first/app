@@ -79,4 +79,13 @@ public class AppInfoTest {
             System.out.println("失败！");
         }
     }
+
+    @Test
+    public void selById(){
+            if(appInfoService.selAppById(58)>0){
+                System.out.println("zhaodao");
+            }else{
+                System.out.println("meiyou");
+            }
+    }
 }

@@ -12,4 +12,5 @@ public interface DevAppInfoService {
             public int selByAPKName(String name);
             public int addApp(AppInfoDTO infoDTO);
             public int delApp(int id);
+            public int selAppById(int id);
 }
