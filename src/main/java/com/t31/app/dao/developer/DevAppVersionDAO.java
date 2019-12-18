@@ -15,4 +15,6 @@ public interface DevAppVersionDAO {
     public AppVersionDTO selectVersionById(int id);
     //通过appId查询版本信息，最终得到一个最新版本的id
     public int selectNewVersionByAppId(int appId);
+    //修改最新版本信息
+    public int updateVersion(AppVersionDTO appVersion);
 }

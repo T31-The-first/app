@@ -13,4 +13,5 @@ public interface DevAppVersionService {
     public int delVersionInfo(int appId);
     public int addAppVersion(AppVersionDTO appVersion);
     public AppVersionDTO selectVersionById(int id);
+    public int updateVersion(AppVersionDTO appVersion);
 }

@@ -16,10 +16,8 @@ public class FileUploadUtil {
          * @throws IOException
          */
         public static AppVersionDTO apkFileUpload(AppVersionDTO appVersion, MultipartFile apkFile, HttpServletRequest request) throws IOException {
-            //apk文件名
-            String apkName = apkFile.getOriginalFilename();
-            String apkSuffix = apkName.substring(apkName.lastIndexOf(".")+1,apkName.length());
-            if(apkSuffix.equals("apk")) {
+                //apk文件名
+                String apkName = apkFile.getOriginalFilename();
                 String downloadLink = "/statics/uploadfiles/" + apkName;
                 //上传文件所在磁盘位置
                 String localFilePath = "D:\\javawork\\t31-ssm-workspace\\app\\src\\main\\webapp\\statics\\uploadfiles\\";
@@ -49,7 +47,7 @@ public class FileUploadUtil {
                 appVersion.setApkFileName(apkName);
                 //获取创建人id
 
-            }
+
             return appVersion;
         }
 }

@@ -77,4 +77,37 @@
                 ORDER BY creationDate DESC
                 LIMIT 0,1
         </select>
+        <update id="updateVersion" parameterType="com.t31.app.entity.AppVersionDTO">
+            UPDATE
+                app_version
+            <set>
+                <if test="versionInfo!=null and versionInfo!=''">
+                    versionInfo = #{versionInfo},
+                </if>
+                <if test="publishStatus>0">
+                    publishStatus=#{publishStatus},
+                </if>
+                <if test="downloadLink!=null and downloadLink!=''">
+                    downloadLink = #{downloadLink},
+                </if>
+                <if test="versionSize>0">
+                    versionSize=#{versionSize},
+                </if>
+                <if test="modifyBy>0">
+                    modifyBy = #{modifyBy},
+                </if>
+                <if test="modifyDate!=null and modifyDate!=''">
+                    modifyDate = #{modifyDate},
+                </if>
+                <if test="apkLocPath!=null and apkLocPath!=''">
+                    apkLocPath = #{apkLocPath},
+                </if>
+                <if test="apkFileName!=null and apkFileName!=''">
+                    apkFileName = #{apkFileName},
+                </if>
+            </set>
+            WHERE id=#{id}
+        </update>
+
+
 </mapper>

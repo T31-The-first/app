@@ -52,4 +52,9 @@ public class DevAppVersionServiceImpl implements DevAppVersionService {
     public AppVersionDTO selectVersionById(int id) {
         return appVersionDAO.selectVersionById(id);
     }
+
+    @Override
+    public int updateVersion(AppVersionDTO appVersion) {
+        return appVersionDAO.updateVersion(appVersion);
+    }
 }

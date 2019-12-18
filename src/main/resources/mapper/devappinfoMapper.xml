@@ -131,7 +131,7 @@
           app_info
         <set>
             <if test="versionId>0">
-                versionId=#{versionId}
+                versionId=#{versionId},
             </if>
         </set>
         WHERE
