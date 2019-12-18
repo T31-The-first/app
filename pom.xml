@@ -196,7 +196,7 @@
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
-      <version>1.3.1</version>
+      <version>1.3.3</version>
     </dependency>
     <!--借助第三方上传组件commons-fileupload与commons-io，-->
   </dependencies>
