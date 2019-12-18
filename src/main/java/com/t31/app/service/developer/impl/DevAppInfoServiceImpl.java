@@ -23,4 +23,19 @@ public class DevAppInfoServiceImpl implements DevAppInfoService {
     public AppInfoList AppInfoView(int id){
         return appInfoDAO.selectAppInfoById(id);
     }
+
+    @Override
+    public int selByAPKName(String name) {
+        return appInfoDAO.selByAPKName(name);
+    }
+
+    @Override
+    public int addApp(AppInfoDTO infoDTO) {
+        return appInfoDAO.addApp(infoDTO);
+    }
+
+    @Override
+    public int delApp(int id) {
+        return appInfoDAO.delApp(id);
+    }
 }

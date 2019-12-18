@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * version: 1.0
  */
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/back")
 public class BackendLoginController {
     @Autowired
     private BackendUserService userService;

@@ -46,7 +46,7 @@
 
 					<div class="clearfix"></div>
 
-					<!-- menu profile quick info -->
+					<!-- menu profile quick backend -->
 					<div class="profile">
 						<div class="profile_pic">
 							<img
@@ -58,7 +58,7 @@
 							<h2>${devUserSession.devCode }</h2>
 						</div>
 					</div>
-					<!-- /menu profile quick info -->
+					<!-- /menu profile quick backend -->
 
 					<br />
 

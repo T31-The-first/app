@@ -12,4 +12,9 @@ public interface DevAppInfoDAO {
     public AppInfoList selectAppInfoById(int id);
     //临时方法，更改图片路径，使图片加载出来
 
+
+    public int selByAPKName(String name);
+
+    public int addApp(AppInfoDTO infoDTO);
+    public int delApp(int id);//根据appid删除app，相应的版本信息也要删除
 }

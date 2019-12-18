@@ -7,4 +7,9 @@ import com.t31.app.util.Page;
 public interface DevAppInfoService {
             public Page selectAppInfo(AppInfoDTO appInfo, Page page);
             public AppInfoList AppInfoView(int id);
+
+
+            public int selByAPKName(String name);
+            public int addApp(AppInfoDTO infoDTO);
+            public int delApp(int id);
 }

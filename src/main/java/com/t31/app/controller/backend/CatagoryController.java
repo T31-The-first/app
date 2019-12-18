@@ -26,8 +26,12 @@ public class CatagoryController {
     @RequestMapping("/levellist")
     @ResponseBody
     public List<AppCategoryDTO> list2(Integer pid){
-        List<AppCategoryDTO> list=categoryService.selAll(pid);
-        return list;
+        if(pid==null){
+            return categoryService.selAll(0);
+        }else{
+            return categoryService.selAll(pid);
+        }
+
     }
 
 

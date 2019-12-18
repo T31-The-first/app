@@ -50,4 +50,33 @@ public class AppInfoTest {
 
 
         }
+
+        @Test
+        public void TestAPKname(){
+            if(appInfoService.selByAPKName("com.momocorp.o2jamu")>0){
+                System.out.println("已存在APKName");
+
+            }else{
+                System.out.println("keyi");
+            }
+        }
+        @Test
+        public void AddTest(){
+            int num=appInfoService.addApp(new AppInfoDTO());
+            if(num>0){
+                System.out.println("成功！");
+            }else{
+                System.out.println("失败！");
+            }
+        }
+
+    @Test
+    public void del() {
+        int num = appInfoService.delApp(59);
+        if(num>0){
+            System.out.println("成功！");
+        }else{
+            System.out.println("失败！");
+        }
+    }
 }

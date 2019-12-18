@@ -22,4 +22,11 @@
                 WHERE
                         T1.appId=#{appId}
         </select>
+    
+    <select id="selByAppId" resultType="int" parameterType="int">
+        SELECT COUNT(1) FROM app_version where appId=#{param1}
+    </select>
+    <delete id="delVersionByAppId" parameterType="int">
+        DELETE FROM app_version where appId=#{param1}
+    </delete>
 </mapper>

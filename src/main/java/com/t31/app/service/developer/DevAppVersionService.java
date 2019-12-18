@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface DevAppVersionService {
     public List<AppVersionInfo> selectVersionListByAppId(int appId);
+
+
+    public int selByAppId(int appId);
+    public int delVersionInfo(int appId);
 }

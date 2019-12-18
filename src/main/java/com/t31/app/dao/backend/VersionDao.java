@@ -11,5 +11,8 @@ import org.apache.ibatis.annotations.Param;
  * version: 1.0
  */
 public interface VersionDao {
+    //根据id查询版本信息
     public AppVersionDTO selById(@Param("id") int id);
+
+
 }

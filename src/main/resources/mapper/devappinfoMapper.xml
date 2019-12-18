@@ -91,4 +91,38 @@
             WHERE
               T1.id=#{id}
     </select>
+    
+    <select id="selByAPKName" resultType="int" parameterType="string">
+        SELECT COUNT(1) FROM  app_info where APKName=#{param1}
+    </select>
+    <insert id="addApp" parameterType="com.t31.app.entity.AppInfoDTO">
+        INSERT INTO
+          app_info
+            (softwareName,APKName,supportROM,interfaceLanguage,softwareSize,
+            devId,appInfo,status,flatformId,categoryLevel3,downloads,createdBy,
+            creationDate,categoryLevel1,categoryLevel2,logoPicPath,versionId)
+        VALUES
+          (#{softwareName},
+          #{APKName},
+          #{supportROM},
+          #{interfaceLanguage},
+          #{softwareSize},
+          #{devId},
+          #{appInfo},
+          #{status},
+          #{flatformId},
+          #{categoryLevel3},
+          #{downloads},
+          #{createdBy},
+          #{creationDate},
+          #{categoryLevel1},
+          #{categoryLevel2},
+          #{logoPicPath},
+          #{versionId})
+    </insert>
+
+    <delete id="delApp" parameterType="int">
+        DELETE FROM app_info where id=#{param1}
+
+    </delete>
 </mapper>
