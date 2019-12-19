@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.Date;
 
-@Component
+
 public class FileUploadUtil {
 
         private static DevAppInfoService appInfoService;
@@ -31,9 +31,17 @@ public class FileUploadUtil {
          * @return
          * @throws IOException
          */
-        //上传文件所在磁盘位置
-//       String localFilePath = "D:\\bdqn学习\\Y2\\idea-worksplace\\t31-ssm-workspace\\app\\src\\main\\webapp\\statics\\uploadfiles\\";
-        private static final String localFilePath = "D:\\bdqn学习\\Y2\\idea-worksplace\\t31-ssm-workspace\\app\\src\\main\\webapp\\statics\\uploadfiles\\";
+        //磁盘保存路径,创建springBean通过配置文件注入路径
+        private static String localFilePath;
+
+        public String getLocalFilePath() {
+                return localFilePath;
+        }
+
+        public void setLocalFilePath(String localFilePath) {
+                FileUploadUtil.localFilePath = localFilePath;
+        }
+
         public static AppVersionDTO apkFileUpload(AppVersionDTO appVersion, MultipartFile apkFile, HttpServletRequest request) throws IOException {
                 //apk文件名
                 String apkName = apkFile.getOriginalFilename();
