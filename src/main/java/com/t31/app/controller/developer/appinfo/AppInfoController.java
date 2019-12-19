@@ -114,7 +114,7 @@ public class AppInfoController {
                 String apkName = apkFile.getOriginalFilename();
                 String apkSuffix = apkName.substring(apkName.lastIndexOf(".")+1,apkName.length());
                 if(apkSuffix.equals("apk")){
-                    FileUploadUtil.apkFileUpload(appVersion,apkFile,request);
+                    appVersion=FileUploadUtil.apkFileUpload(appVersion,apkFile,request);
                     //获取创建人id
                     if(request.getSession().getAttribute("devUserSession")!=null){
                         DevUserDTO userDTO = (DevUserDTO)request.getSession().getAttribute("devUserSession");
@@ -226,73 +226,8 @@ public class AppInfoController {
      * @return
      */
     @RequestMapping(value = "/add.do",method = RequestMethod.POST)
-    public String addDo(AppInfoDTO appInfoDTO,
-                        @RequestParam(value = "a_logoPicPath",required = false) MultipartFile file,
-                      HttpServletRequest request,
-                      Model model) throws IOException {
-        String errorInfo=null;
-        String filePath="/statics/uploadfiles";
-        //上传文件所在磁盘位置
-        String localFilePath = "D:\\bdqn学习\\Y2\\idea-worksplace\\t31-ssm-workspace\\app\\src\\main\\webapp\\statics\\uploadfiles\\";
-        //文件存放的位置
-        String path=request.getServletContext().getRealPath(filePath);
-        System.out.println(path);
-        String msg="";
-        if(!file.isEmpty()){
-            errorInfo="fileUploadError";
-//            System.out.println(file.getOriginalFilename()); //原文件名
-            String prefix= FilenameUtils.getExtension(file.getOriginalFilename()); // 原文件名后缀名
-
-            int fileSize=500000;
-            if(file.getSize()>fileSize*1024){//上传文件大小不能大于500kb*1024
-                model.addAttribute(errorInfo,"传文件大小不能大于500kb*1024");
-
-            } else if(prefix.equalsIgnoreCase("jpg")
-                    ||prefix.equalsIgnoreCase("peng")
-                    ||prefix.equalsIgnoreCase("jpeg")
-                    ||prefix.equalsIgnoreCase("pneg")){//上传图片格式不正确
-                String fileName=null;
-                fileName=appInfoDTO.getAPKName()+".jpg";
-
-                //名字加.jpg等图片路径
-                System.out.println("--------------------------");
-//                File tempFile=new File(path, file.getOriginalFilename());
-
-                File targetFile=new File(path,fileName);/*+File.separator+appInfoDTO.getAPKName()*/
-                if(!targetFile.exists()){
-                    targetFile.mkdirs();
-                }
-
-                //上传文件到web项目位置
-                file.transferTo(targetFile);
-                //文件复制到磁盘位置
-                File localFile = new File(localFilePath+fileName);
-                if(!localFile.exists()){
-                    localFile.createNewFile();
-                }
-                InputStream inputFile = new FileInputStream(targetFile);
-                OutputStream outputStreamFile = new FileOutputStream(localFile);
-                byte[] bytes = new byte[inputFile.available()];
-                inputFile.read(bytes);
-                outputStreamFile.write(bytes);
-                inputFile.close();
-                outputStreamFile.close();
-                //上传文件完成，进行数据库新增操作
-                try {
-                    appInfoDTO.setLogoPicPath(filePath+"/"+fileName);
-                }catch (Exception e){
-                    e.printStackTrace();
-                    model.addAttribute(errorInfo,"上传失败！");
-                }
-            }else{
-                model.addAttribute(errorInfo,"上传图片格式不正确");
-            }
-        }
-        if(appInfoService.addApp(appInfoDTO)>0){
-            return "redirect:/developer/appinfo/applist.html";
-        }else{
-            return "/add.html";
-        }
+    public String addDo(AppInfoDTO appInfoDTO, @RequestParam(value = "a_logoPicPath",required = false) MultipartFile file, HttpServletRequest request, Model model) throws IOException {
+          return FileUploadUtil.addAndModify(appInfoDTO,file,request,"add",model);
     }
 
 
@@ -303,7 +238,7 @@ public class AppInfoController {
     @RequestMapping("/delApp")
     @ResponseBody
     public String delAppInfo(@RequestParam("id") int appId,HttpServletRequest request){
-        String rs="";
+        String rs="false";
         AppInfoList list=appInfoService.selAppInfoById(appId);
         if(appInfoService.selAppById(appId)>0){
             if(appVersionService.selByAppId(appId)>0){
@@ -311,17 +246,11 @@ public class AppInfoController {
                 if(num>0){
                     if(appInfoService.delApp(appId)>0){
                         rs="true";
-                    }else{
-                        rs="false";
                     }
-                }else{
-                    rs="false";
                 }
             }else{
                 if(appInfoService.delApp(appId)>0){
                     rs="true";
-                }else {
-                    rs = "false";
                 }
             }
         }else{
@@ -338,18 +267,12 @@ public class AppInfoController {
             File localFile = new File(localPath,newFileName);
             if (targetFile.exists()) {
                 targetFile.delete();
-            } else {
-//                System.out.println("文件不存在！");
             }
             if (localFile.exists()) {
                 localFile.delete();
-            } else {
-//                System.out.println("磁盘文件不存在！");
             }
         }
     }
-
-
         return "{\"delResult\":\""+rs+"\"}";
     }
 
@@ -364,114 +287,19 @@ public class AppInfoController {
     @RequestMapping("/delFile")
     @ResponseBody
     public String delFile(int id,String flag,HttpServletRequest request,Model model){
-     String rs="failed";
-
         // 文件路径
         AppInfoList list=appInfoService.selAppInfoById(id);
-        String localPath="D:\\bdqn学习\\Y2\\idea-worksplace\\t31-ssm-workspace\\app\\src\\main\\webapp\\";
-        String path = request.getSession().getServletContext().getRealPath(list.getLogoPicPath());
-        if(list.getLogoPicPath()!=null){
-            String newFileName = list.getLogoPicPath();
-//            File targetFile = new File(path, newFileName);
-           //web文件路径
-            File targetFile = new File(path);
-            if (targetFile.exists()) {
-                targetFile.delete();
-                rs="success";
-            } else {
-//                System.out.println("文件不存在！");
-            }
-
-            //磁盘路径
-            File localFile = new File(localPath,newFileName);
-            if (localFile.exists()) {
-                localFile.delete();
-                rs="success";
-            } else {
-//                System.out.println("磁盘文件不存在！");
-
-            }
-
-            if("success".equals(rs)){
-                appInfoService.upLogoById(id);
-            }
+        String rs=FileUploadUtil.delUpload(request,id,list.getLogoPicPath(),list.getLogoLocPath());
+        if("success".equals(rs)){
+            appInfoService.upLogoById(id);
         }
         return "{\"result\":\""+rs+"\"}";
     }
 
     @RequestMapping(value = "/modifyDo",method = RequestMethod.POST)
-    public String modifyDo(AppInfoDTO appInfoDTO,
-                           MultipartFile file,
-                           HttpServletRequest request,
-                           String statusName,
-                           Model model) throws IOException {
-
-        String errorInfo=null;
-        String filePath="/statics/uploadfiles";
-        //上传文件所在磁盘位置
-        String localFilePath = "D:\\bdqn学习\\Y2\\idea-worksplace\\t31-ssm-workspace\\app\\src\\main\\webapp\\statics\\uploadfiles\\";
-        //文件存放的位置
-        String path=request.getServletContext().getRealPath(filePath);
-        System.out.println(path);
-        String msg="";
-        if(!file.isEmpty()){
-            errorInfo="fileUploadError";
-//            System.out.println(file.getOriginalFilename()); //原文件名
-            String prefix= FilenameUtils.getExtension(file.getOriginalFilename()); // 原文件名后缀名
-
-            int fileSize=500000;
-            if(file.getSize()>fileSize*1024){//上传文件大小不能大于500kb*1024
-                model.addAttribute(errorInfo,"传文件大小不能大于500kb*1024");
-
-            } else if(prefix.equalsIgnoreCase("jpg")
-                    ||prefix.equalsIgnoreCase("peng")
-                    ||prefix.equalsIgnoreCase("jpeg")
-                    ||prefix.equalsIgnoreCase("pneg")){//上传图片格式不正确
-                String fileName=null;
-                fileName=appInfoDTO.getAPKName()+".jpg";
-
-                //名字加.jpg等图片路径
-                System.out.println("--------------------------");
-//                File tempFile=new File(path, file.getOriginalFilename());
-
-                File targetFile=new File(path,fileName);/*+File.separator+appInfoDTO.getAPKName()*/
-                if(!targetFile.exists()){
-                    targetFile.mkdirs();
-                }
-
-                //上传文件到web项目位置
-                file.transferTo(targetFile);
-                //文件复制到磁盘位置
-                File localFile = new File(localFilePath+fileName);
-                if(!localFile.exists()){
-                    localFile.createNewFile();
-                }
-                InputStream inputFile = new FileInputStream(targetFile);
-                OutputStream outputStreamFile = new FileOutputStream(localFile);
-                byte[] bytes = new byte[inputFile.available()];
-                inputFile.read(bytes);
-                outputStreamFile.write(bytes);
-                inputFile.close();
-                outputStreamFile.close();
-                //上传文件完成，进行数据库新增操作
-                try {
-                    appInfoDTO.setLogoPicPath(filePath+"/"+fileName);
-                }catch (Exception e){
-                    e.printStackTrace();
-                    model.addAttribute(errorInfo,"上传失败！");
-                }
-            }else{
-                model.addAttribute(errorInfo,"上传图片格式不正确");
-            }
-        }
+    public String modifyDo(AppInfoDTO appInfoDTO, MultipartFile file, HttpServletRequest request, String statusName, Model model) throws IOException {
         appInfoDTO.setStatus(dataDictionaryService.selByCodeAndTypeName(statusName));
-        appInfoDTO.setModifyDate(new Date());
-        appInfoDTO.setModifyBy(1);
-        if(appInfoService.upAppInfo(appInfoDTO)>0){
-            return "redirect:/developer/appinfo/applist.html";
-        }else{
-            return "/modify.html";
-        }
+        return FileUploadUtil.addAndModify(appInfoDTO,file,request,"modify",model);
     }
 
     /**

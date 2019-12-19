@@ -167,7 +167,7 @@
 
     </select>
     <update id="upLogoById" parameterType="int">
-        UPDATE app_info SET logoPicPath=null where id=#{id}
+        UPDATE app_info SET logoPicPath=null,logoLocPath=null where id=#{id}
     </update>
     
     <update id="upAppInfo" parameterType="com.t31.app.entity.AppInfoDTO">
