@@ -33,19 +33,27 @@ public class FileUploadUtil {
          */
         //磁盘保存路径,创建springBean通过配置文件注入路径
         private static String localFilePath;
+        private static String targetFilePath;
 
         public String getLocalFilePath() {
                 return localFilePath;
         }
-
         public void setLocalFilePath(String localFilePath) {
                 FileUploadUtil.localFilePath = localFilePath;
+        }
+
+        public String getTargetFilePath() {
+                return targetFilePath;
+        }
+
+        public void setTargetFilePath(String targetFilePath) {
+                FileUploadUtil.targetFilePath = targetFilePath;
         }
 
         public static AppVersionDTO apkFileUpload(AppVersionDTO appVersion, MultipartFile apkFile, HttpServletRequest request) throws IOException {
                 //apk文件名
                 String apkName = apkFile.getOriginalFilename();
-                String downloadLink = "/statics/uploadfiles/" + apkName;
+                String downloadLink = targetFilePath + apkName;
                 //上传文件所在磁盘位置
                 //上传文件所在web项目位置
                 String webFilePath = request.getServletContext().getRealPath("/statics/uploadfiles");
@@ -95,10 +103,10 @@ public class FileUploadUtil {
                                         ||prefix.equalsIgnoreCase("jpeg")
                                         ||prefix.equalsIgnoreCase("pneg")){//上传图片格式不正确
 
-                                        String filePath="/statics/uploadfiles";
+                                        //String filePath="/statics/uploadfiles";
 
                                         //文件存放的位置
-                                        String path=request.getServletContext().getRealPath(filePath);
+                                        String path=request.getServletContext().getRealPath(targetFilePath);
                                         String fileName=appInfoDTO.getAPKName()+".jpg"; //名字为平APKName+.jpg
                                         File targetFile=new File(path,fileName);/*+File.separator+appInfoDTO.getAPKName()*/
                                         if(!targetFile.exists()){
@@ -120,7 +128,7 @@ public class FileUploadUtil {
                                         inputFile.close();
                                         outputStreamFile.close();
                                         //上传文件完成，进行数据库新增操作
-                                        appInfoDTO.setLogoPicPath(filePath+"/"+fileName);
+                                        appInfoDTO.setLogoPicPath(targetFilePath+fileName);
                                         appInfoDTO.setLogoLocPath(localFile.getAbsolutePath());
 
                                         //上传文件成功获取修改人id
