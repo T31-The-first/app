@@ -15,12 +15,12 @@ public class FileUploadUtil {
          * @return
          * @throws IOException
          */
+        private static final String localFilePath = "D:\\javawork\\t31-ssm-workspace\\app\\src\\main\\webapp\\statics\\uploadfiles\\";
         public static AppVersionDTO apkFileUpload(AppVersionDTO appVersion, MultipartFile apkFile, HttpServletRequest request) throws IOException {
                 //apk文件名
                 String apkName = apkFile.getOriginalFilename();
                 String downloadLink = "/statics/uploadfiles/" + apkName;
                 //上传文件所在磁盘位置
-                String localFilePath = "D:\\javawork\\t31-ssm-workspace\\app\\src\\main\\webapp\\statics\\uploadfiles\\";
                 //上传文件所在web项目位置
                 String webFilePath = request.getServletContext().getRealPath("/statics/uploadfiles");
                 File webFile = new File(webFilePath, apkName);
