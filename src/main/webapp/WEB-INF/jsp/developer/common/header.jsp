@@ -34,6 +34,8 @@
 	<link href='${pageContext.request.contextPath }/statics/localcss/appinfolist.css' rel='stylesheet'>
 </head>
 <body class="nav-md footer_fixed">
+<input type="hidden" id="path" name="path" value="${pageContext.request.contextPath }"/>
+<input type="hidden" id="referer" name="referer" value="<%=request.getHeader("Referer")%>" />
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col menu_fixed">

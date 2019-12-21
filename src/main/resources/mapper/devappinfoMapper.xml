@@ -101,7 +101,7 @@
           app_info
             (softwareName,APKName,supportROM,interfaceLanguage,softwareSize,
             devId,appInfo,status,flatformId,categoryLevel3,downloads,createdBy,
-            creationDate,categoryLevel1,categoryLevel2,logoPicPath,versionId)
+            creationDate,categoryLevel1,categoryLevel2,logoPicPath,logoLocPath,versionId)
         VALUES
           (#{softwareName},
           #{APKName},
@@ -119,6 +119,7 @@
           #{categoryLevel1},
           #{categoryLevel2},
           #{logoPicPath},
+          #{logoLocPath},
           #{versionId})
     </insert>
 

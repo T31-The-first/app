@@ -189,24 +189,16 @@ public class AppInfoController {
                 return "forward:/developer/appinfo/appversionmodify.html?aid="+appVersion.getAppId()+"&vid="+appVersion.getId();
             }
 
-        /**
-         * 12-17 20:20
-     * 新增app基础信息yemian
-     * @return
-     */
     @RequestMapping("/add.html")
     public String addHtml(){
         return "developer/appinfoadd";
     }
 
-    /**
-     * 12-17 20:43
-     * ajax判断apk是否存在
-     */
+     // ajax判断apk是否存在
     @RequestMapping("/apkexist")
     @ResponseBody
     public String checkApkName(String APKName){
-        String rs=null;
+        String rs="empty";
         //noexist
         if(APKName!=null){
             if(appInfoService.selByAPKName(APKName)>0){
@@ -214,32 +206,22 @@ public class AppInfoController {
             }else{
                 rs="noexist";
             }
-        }else{
-            rs="empty";
         }
         return "{\"APKName\":\""+rs+"\"}";
     }
 
-    /**
-     * 12-17 21:12
-     * 新增app基础信息处理
-     * @return
-     */
+  //新增app信息
     @RequestMapping(value = "/add.do",method = RequestMethod.POST)
     public String addDo(AppInfoDTO appInfoDTO, @RequestParam(value = "a_logoPicPath",required = false) MultipartFile file, HttpServletRequest request, Model model) throws IOException {
           return FileUploadUtil.addAndModify(appInfoDTO,file,request,"add",model);
     }
 
-
-    /**
-     * 删除app信息的同时也要删除此app关联的历史版本信息
-     * @return
-     */
+     // 删除app信息的同时也要删除此app关联的历史版本信息
     @RequestMapping("/delApp")
     @ResponseBody
     public String delAppInfo(@RequestParam("id") int appId,HttpServletRequest request){
         String rs="false";
-        AppInfoList list=appInfoService.selAppInfoById(appId);
+        AppInfoList appInfo=appInfoService.selAppInfoById(appId);
         if(appInfoService.selAppById(appId)>0){
             if(appVersionService.selByAppId(appId)>0){
                 int num=appVersionService.delVersionInfo(appId);
@@ -256,29 +238,14 @@ public class AppInfoController {
         }else{
             rs="notexist";
         }
-    if("true".equals(rs)){
-        // 文件路径
-        String localPath="D:\\bdqn学习\\Y2\\idea-worksplace\\t31-ssm-workspace\\app\\src\\main\\webapp\\";
-        String path = request.getSession().getServletContext().getRealPath(list.getLogoPicPath());
-        if(list.getLogoPicPath()!=null){
-            String newFileName = list.getLogoPicPath();
-//            File targetFile = new File(path, newFileName);
-            File targetFile = new File(path);
-            File localFile = new File(localPath,newFileName);
-            if (targetFile.exists()) {
-                targetFile.delete();
-            }
-            if (localFile.exists()) {
-                localFile.delete();
-            }
+        if("true".equals(rs)){
+            String delRs=FileUploadUtil.delUpload(request,appId,appInfo.getLogoPicPath(),appInfo.getLogoLocPath());
         }
-    }
-        return "{\"delResult\":\""+rs+"\"}";
+    return "{\"delResult\":\""+rs+"\"}";
     }
 
     @RequestMapping("/modify.html")
     public String modifyHtml(int id,Model model){
-//        appInfo
         AppInfoList list=appInfoService.selAppInfoById(id);
         model.addAttribute("appInfo",list);
         return "developer/appinfomodify";

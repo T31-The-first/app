@@ -56,7 +56,7 @@ public class FileUploadUtil {
                 String downloadLink = targetFilePath + apkName;
                 //上传文件所在磁盘位置
                 //上传文件所在web项目位置
-                String webFilePath = request.getServletContext().getRealPath("/statics/uploadfiles");
+                String webFilePath = request.getServletContext().getRealPath(targetFilePath);
                 File webFile = new File(webFilePath, apkName);
                 if (!webFile.exists()) {
                     webFile.mkdirs();
@@ -81,10 +81,8 @@ public class FileUploadUtil {
                 appVersion.setApkFileName(apkName);
                 //获取创建人id
 
-
             return appVersion;
         }
-
 
         public static String addAndModify(AppInfoDTO appInfoDTO, MultipartFile file, HttpServletRequest request,String rs,Model model) throws IOException {
                 int result=0;
@@ -103,8 +101,6 @@ public class FileUploadUtil {
                                         ||prefix.equalsIgnoreCase("jpeg")
                                         ||prefix.equalsIgnoreCase("pneg")){//上传图片格式不正确
 
-                                        //String filePath="/statics/uploadfiles";
-
                                         //文件存放的位置
                                         String path=request.getServletContext().getRealPath(targetFilePath);
                                         String fileName=appInfoDTO.getAPKName()+".jpg"; //名字为平APKName+.jpg
@@ -118,7 +114,7 @@ public class FileUploadUtil {
                                         //文件复制到磁盘位置
                                         File localFile = new File(localFilePath+fileName);
                                         if(!localFile.exists()){
-                                                localFile.createNewFile();
+                                            localFile.createNewFile();
                                         }
                                         InputStream inputFile = new FileInputStream(targetFile);
                                         OutputStream outputStreamFile = new FileOutputStream(localFile);
@@ -193,13 +189,14 @@ public class FileUploadUtil {
                         //删除target下的文件
                         File targetFile = new File(path);
                         if (targetFile.exists()) {
-                                targetFile.delete();
-                                result="success";
+                            targetFile.delete();
+                            result="success";
                         }
                         //删除磁盘文件
                         File localFile = new File(localPath);
                         if (localFile.exists()) {
-                                localFile.delete();
+                            localFile.delete();
+                            result="success";
                         }
                 }
                 return result;

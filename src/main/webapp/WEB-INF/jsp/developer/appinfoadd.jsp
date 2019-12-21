@@ -19,7 +19,7 @@
          </div>
        </div> -->
            <div class="clearfix"></div>
-        <form class="form-horizontal form-label-left" action="/developer/appinfo/add.do" method="post" enctype="multipart/form-data">
+        <form id="userForm" name="userForm" class="form-horizontal form-label-left" action="/developer/appinfo/add.do" method="post" enctype="multipart/form-data">
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">软件名称 <span class="required">*</span>
             </label>
@@ -27,6 +27,7 @@
               <input id="softwareName" class="form-control col-md-7 col-xs-12" 
                data-validate-length-range="20" data-validate-words="1" name="softwareName"  required="required"
                placeholder="请输入软件名称" type="text">
+              <font color="red"></font>
             </div>
           </div>
           <div class="item form-group">
@@ -35,8 +36,10 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input id="APKName" class="form-control col-md-7 col-xs-12" 
               	data-validate-length-range="20" data-validate-words="1" name="APKName"   required="required"
-              	placeholder="请输入APK名称" type="text">
+              	placeholder="请输入APK名称" type="text" style="float: left">
+              <font color="red"></font>
             </div>
+
           </div>
           
           <div class="item form-group">
@@ -46,6 +49,7 @@
               <input id="supportROM" class="form-control col-md-7 col-xs-12" name="supportROM" 
               	data-validate-length-range="20" data-validate-words="1"   required="required"
               	placeholder="请输入支持的ROM" type="text">
+              <font color="red"></font>
             </div>
           </div>
           <div class="item form-group">
@@ -55,6 +59,7 @@
               <input id="interfaceLanguage" class="form-control col-md-7 col-xs-12" 
               data-validate-length-range="20" data-validate-words="1" name="interfaceLanguage"   required="required"
               placeholder="请输入软件支持的界面语言" type="text">
+              <font color="red"></font>
             </div>
           </div>
           <div class="item form-group">
@@ -63,6 +68,7 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input type="number" id="softwareSize" name="softwareSize"   required="required" onkeyup="value=value.replace(/[^\d]/g,'')"
               data-validate-minmax="10,500"  placeholder="请输入软件大小，单位为Mb" class="form-control col-md-7 col-xs-12">
+              <font color="red"></font>
             </div>
           </div>
           
@@ -70,8 +76,9 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">下载次数 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="number" id="downloads" name="downloads"   required="required"
+              <input type="number" id="downloads" name="downloads"   required="required" value="0" readonly="readonly"
               data-validate-minmax="10,500"  placeholder="请输入下载次数" class="form-control col-md-7 col-xs-12">
+              <font color="red"></font>
             </div>
           </div>
           
@@ -79,6 +86,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">所属平台 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select name="flatformId" id="flatformId" class="form-control"   required="required"></select>
+              <font color="red"></font>
             </div>
           </div>
           
@@ -86,6 +94,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">一级分类 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select name="categoryLevel1" id="categoryLevel1" class="form-control"   required="required"> </select>
+              <font color="red"></font>
             </div>
           </div>
           
@@ -93,6 +102,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">二级分类 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select name="categoryLevel2" id="categoryLevel2" class="form-control"  required="required"></select>
+              <font color="red"></font>
             </div>
           </div>
           
@@ -100,6 +110,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">三级分类 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select name="categoryLevel3" id="categoryLevel3" class="form-control"  required="required"></select>
+              <font color="red"></font>
             </div>
           </div>
           <div class="item form-group">
@@ -115,20 +126,24 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <textarea id="appInfo" name="appInfo"     required="required"
               placeholder="请输入本软件的相关信息，本信息作为软件的详细信息进行软件的介绍。" class="form-control col-md-7 col-xs-12"></textarea>
+              <font color="red"></font>
             </div>
           </div>
            <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">LOGO图片 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="hidden" id="errorinfo" value="${fileUploadError}"/>
             <input type="file" class="form-control col-md-7 col-xs-12" name="a_logoPicPath"  required="required" id="a_logoPicPath"/>
-            ${fileUploadError }
+              <font color="red"></font>
+              <p><span style="color:red;font-weight: bold;">*注：1、大小不得超过500k.2、图片格式：jpg、png、jpeg、pneg</span></p>
+              <%--${fileUploadError }--%>
             </div>
           </div>
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
-              <button id="send" type="submit" class="btn btn-success">保存</button>
+              <button id="send" type="button" class="btn btn-success">保存</button>
               <button type="button" class="btn btn-primary" id="back">返回</button>
               <br/><br/>
             </div>
