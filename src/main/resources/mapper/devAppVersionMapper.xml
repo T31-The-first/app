@@ -59,6 +59,11 @@
         </insert>
         <select id="selectVersionById" parameterType="int" resultType="com.t31.app.entity.AppVersionDTO">
               SELECT
+                  id,
+                  appId,
+                  downloadLink,
+                  apkLocPath,
+                  apkFileName,
                   versionNo,
                   versionSize,
                   versionInfo

@@ -27,6 +27,7 @@
         </bean>
         <bean class="com.t31.app.util.FileUploadUtil" id="uploadUtil">
                 <property name="localFilePath" value="D:\javawork\t31-ssm-workspace\app\src\main\webapp\statics\uploadfiles\"/>
+                <property name="targetFilePath" value="/statics/uploadfiles/"/>
         </bean>
         <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

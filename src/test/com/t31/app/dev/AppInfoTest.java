@@ -28,6 +28,8 @@ public class AppInfoTest {
 //            for(AppInfoList2 app:(List<AppInfoList2>)appInfoService.selectAppInfo(new AppInfoDTO(),page).getDataList()) {
 //                System.out.println(app.getCategoryLevel1Name());
 //            }
+            int num = 2<<3;
+            System.out.println(num);
         }
         @Test
         public void updateAppLogTest(){
