@@ -51,6 +51,7 @@ function delfile(id){
                 $("#uploadfile").show();
                 $("#logoFile").html('');
                 $("#logoPicPath").val("");
+                logoPicPath2.val("");
             }else if(data.result == "failed"){
                 alert("删除失败！");
             }
@@ -79,6 +80,12 @@ $(function(){
     errorinfo=$("#errorinfo");
     logoPicPath2=$("#logoPicPath");
 
+
+    /*if(errorinfo.val() == null || errorinfo.val() == ""){
+        logoPicPath2.next().html("*");
+    }else{
+        logoPicPath2.next().html(errorinfo.val());
+    }*/
 
 	//动态加载所属平台列表
 	$.ajax({
@@ -205,9 +212,9 @@ $(function(){
         bindBlur(stringElem[i],stringZhi[i],2);
     }
 
-    if(logoPicPath2.val()!=null&&logoPicPath2.val()!=''){
+  /*  if(logoPicPath2.val()!=null&&logoPicPath2.val()!=''){
         attach.attr("validateStatus",true);
-    }else{
+    }else{*/
         attach.on("change",function () {
             if(attach.val()!=null&&attach.val()!=''){
                 validateTip(attach.next(),{"color":"green"},imgYes,true);
@@ -215,7 +222,7 @@ $(function(){
                 validateTip(attach.next(),{"color":"red"},imgNo+"未上传文件",false);
             }
         });
-    }
+    // }
 
 
 
@@ -237,7 +244,12 @@ $(function(){
         categoryLevel3.blur();
         appInfo.blur();
 
-        attach.change();
+        if(logoPicPath2.val()!=null&&logoPicPath2.val()!=''){
+            attach.attr("validateStatus",true);
+        }else{
+            attach.change();
+        }
+
 
         if(softwareName.attr("validateStatus") == "true"
             // &&APKName.attr("validateStatus") != "true"

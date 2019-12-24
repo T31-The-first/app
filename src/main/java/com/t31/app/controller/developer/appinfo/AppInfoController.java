@@ -110,7 +110,7 @@ public class AppInfoController {
         @RequestMapping("/addversionsave")
         public String addAppVersion(AppVersionDTO appVersion,@RequestParam("a_downloadLink")MultipartFile apkFile,Model model,HttpServletRequest request) throws IOException {
             if(!apkFile.isEmpty()){
-                //apk文件名
+//                apk文件名
                 String apkName = apkFile.getOriginalFilename();
                 String apkSuffix = apkName.substring(apkName.lastIndexOf(".")+1,apkName.length());
                 if(apkSuffix.equals("apk")){
