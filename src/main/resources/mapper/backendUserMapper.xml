@@ -9,7 +9,7 @@
           T1.id,userCode,userName,userType,userPassword,
           T2.valueName as userTypeName
         FROM backend_user T1
-        LEFT JOIN data_dictionary T2 on T1.userType=t2.valueId  and T2.typeCode='USER_TYPE'
+        LEFT JOIN data_dictionary T2 on T1.userType=T2.valueId  and T2.typeCode='USER_TYPE'
         WHERE userCode=#{param1} and userPassword=#{param2}
     </select>
 </mapper>

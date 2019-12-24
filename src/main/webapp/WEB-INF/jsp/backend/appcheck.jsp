@@ -145,7 +145,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">版本大小 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="number" value="${appVersion.versionSize }" class="form-control col-md-7 col-xs-12">
+              <input type="number" value="${appVersion.versionSize }" class="form-control col-md-7 col-xs-12" readonly="readonly">
             </div>
           </div>
        
@@ -160,7 +160,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">版本简介 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea class="form-control col-md-7 col-xs-12">
+              <textarea class="form-control col-md-7 col-xs-12" readonly="readonly">
               ${appVersion.versionInfo }</textarea>
             </div>
           </div>
