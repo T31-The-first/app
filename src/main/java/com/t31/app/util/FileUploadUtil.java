@@ -89,7 +89,7 @@ public class FileUploadUtil {
                 String errorInfo="fileUploadError";
 
                 if(appInfoDTO.getLogoPicPath()!=null&&!("").equals(appInfoDTO.getLogoPicPath())){
-                        result=addModify(appInfoDTO,rs);
+                        result=addModify(appInfoDTO,rs,request);
                 }else{
                         if(!file.isEmpty()){
                                 String prefix= FilenameUtils.getExtension(file.getOriginalFilename()); // 原文件名后缀名
@@ -132,7 +132,7 @@ public class FileUploadUtil {
 
                                          }*/
                                         //传参判断是为添加还是修改
-                                        result=addModify(appInfoDTO,rs);
+                                        result=addModify(appInfoDTO,rs,request);
                                 }else{
                                         model.addAttribute(errorInfo,"上传图片格式不正确");
                                 }
@@ -167,13 +167,22 @@ public class FileUploadUtil {
         }
 
         //添加与修改
-        public static int addModify(AppInfoDTO appInfoDTO,String rs){
+        public static int addModify(AppInfoDTO appInfoDTO,String rs,HttpServletRequest request){
                 int result=0;
                 if("add".equals(rs)){
+                        if(getId(request)>0){
+                                appInfoDTO.setCreatedBy(getId(request));
+                                appInfoDTO.setCreationDate(new Date());
+                        }
+
                         appInfoDTO.setCreatedBy(1);
                         appInfoDTO.setCreationDate(new Date());
                         result=appInfoService.addApp(appInfoDTO);
                 }else if("modify".equals(rs)){
+                        if(getId(request)>0){
+                                appInfoDTO.setModifyBy(getId(request));
+                                appInfoDTO.setCreationDate(new Date());
+                        }
                         appInfoDTO.setModifyBy(1);
                         appInfoDTO.setModifyDate(new Date());
                         result=appInfoService.upAppInfo(appInfoDTO);

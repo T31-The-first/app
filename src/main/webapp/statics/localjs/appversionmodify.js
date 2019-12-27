@@ -1,4 +1,6 @@
+
 function delfile(id){
+
 	$.ajax({
 		type:"GET",//请求类型
 		url:"/developer/appinfo/delfile",//请求的url
@@ -19,11 +21,12 @@ function delfile(id){
 	});  
 }
 
-$(function(){  
+$(function(){
+
 	$("#back").on("click",function(){
 		window.location.replace('/developer/appinfo/applist.html') ;
 	});
-	
+
 	//上传APK文件---------------------
 	var downloadLink = $("#downloadLink").val();
 	var id = $("#id").val();
