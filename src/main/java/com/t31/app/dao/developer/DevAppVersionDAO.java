@@ -17,4 +17,6 @@ public interface DevAppVersionDAO {
     public int selectNewVersionByAppId(int appId);
     //修改最新版本信息
     public int updateVersion(AppVersionDTO appVersion);
+    //删除apk文件信息,修改字段
+    public int delApkFileInfo(int id);
 }

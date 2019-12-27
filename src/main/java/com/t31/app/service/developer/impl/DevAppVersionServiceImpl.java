@@ -57,4 +57,9 @@ public class DevAppVersionServiceImpl implements DevAppVersionService {
     public int updateVersion(AppVersionDTO appVersion) {
         return appVersionDAO.updateVersion(appVersion);
     }
+
+    @Override
+    public int delVersionAPkFile(int id) {
+        return appVersionDAO.delApkFileInfo(id);
+    }
 }

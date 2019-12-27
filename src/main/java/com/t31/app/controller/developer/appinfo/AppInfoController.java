@@ -188,6 +188,23 @@ public class AppInfoController {
                 }
                 return "forward:/developer/appinfo/appversionmodify.html?aid="+appVersion.getAppId()+"&vid="+appVersion.getId();
             }
+            @RequestMapping("/delfile")
+            @ResponseBody
+            public String modifyVersionDelFile(int id,HttpServletRequest request){
+                //查询出文件所在位置，删除文件
+                AppVersionDTO appVersionDTO = appVersionService.selectVersionById(id);
+                String filePath = appVersionDTO.getApkLocPath();
+                String downFilePath = appVersionDTO.getDownloadLink();
+                String result = FileUploadUtil.delUpload(request,downFilePath,filePath);
+                //修改这条数据，把文件路径置空
+                int infoResult = appVersionService.delVersionAPkFile(id);
+                if(infoResult>0){
+                    return result;
+                }else{
+                    return "failed";
+                }
+
+            }
 
     @RequestMapping("/add.html")
     public String addHtml(){
@@ -239,7 +256,7 @@ public class AppInfoController {
             rs="notexist";
         }
         if("true".equals(rs)){
-            String delRs=FileUploadUtil.delUpload(request,appId,appInfo.getLogoPicPath(),appInfo.getLogoLocPath());
+            String delRs=FileUploadUtil.delUpload(request,appInfo.getLogoPicPath(),appInfo.getLogoLocPath());
         }
     return "{\"delResult\":\""+rs+"\"}";
     }
@@ -256,7 +273,7 @@ public class AppInfoController {
     public String delFile(int id,String flag,HttpServletRequest request,Model model){
         // 文件路径
         AppInfoList list=appInfoService.selAppInfoById(id);
-        String rs=FileUploadUtil.delUpload(request,id,list.getLogoPicPath(),list.getLogoLocPath());
+        String rs=FileUploadUtil.delUpload(request,list.getLogoPicPath(),list.getLogoLocPath());
         if("success".equals(rs)){
             appInfoService.upLogoById(id);
         }

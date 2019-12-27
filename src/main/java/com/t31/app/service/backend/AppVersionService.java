@@ -10,4 +10,5 @@ import com.t31.app.entity.AppVersionDTO;
  */
 public interface AppVersionService {
     public AppVersionDTO selById(int id);
+
 }

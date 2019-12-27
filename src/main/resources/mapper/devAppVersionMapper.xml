@@ -113,6 +113,18 @@
             </set>
             WHERE id=#{id}
         </update>
+        <update id="delApkFileInfo" parameterType="int">
+            UPDATE
+              app_version
+            SET
+              downloadLink='',
+              apkFileName='',
+              apkLocPath=''
+            WHERE
+              id=#{id}
+
+        </update>
+
 
 
 </mapper>

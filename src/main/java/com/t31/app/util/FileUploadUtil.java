@@ -181,7 +181,7 @@ public class FileUploadUtil {
                 return result;
         }
 
-        public static String delUpload(HttpServletRequest request,int appId,String realPath,String localPath){ // 删除文件
+        public static String delUpload(HttpServletRequest request,String realPath,String localPath){ // 删除文件
                 String result="failed";
                 // 文件路径
                 String path = request.getSession().getServletContext().getRealPath(realPath);
